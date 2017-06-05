@@ -1,0 +1,422 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: 从源码构建 Flink</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown active">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class="active"><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+  
+  
+  <div class="col-md-8 col-md-offset-2 text">
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <h1>从源码构建 Flink</h1>
+
+
+<p>本文主要介绍如何从源码构建Flink 1.1.0</p>
+
+<ul id="markdown-toc">
+  <li><a href="#flink-构建" id="markdown-toc-flink-构建">Flink 构建</a></li>
+  <li><a href="#hadoop-版本" id="markdown-toc-hadoop-版本">Hadoop 版本</a>    <ul>
+      <li><a href="#hadoop-1" id="markdown-toc-hadoop-1">Hadoop 1</a></li>
+      <li><a href="#hadoop-2x" id="markdown-toc-hadoop-2x">Hadoop 2.x</a></li>
+      <li><a href="#发行商版本" id="markdown-toc-发行商版本">发行商版本</a></li>
+    </ul>
+  </li>
+  <li><a href="#scala-版本" id="markdown-toc-scala-版本">Scala 版本</a></li>
+  <li><a href="#加密文件系统" id="markdown-toc-加密文件系统">加密文件系统</a></li>
+  <li><a href="#内部细节" id="markdown-toc-内部细节">内部细节</a></li>
+</ul>
+
+<h2 id="flink-构建">Flink 构建</h2>
+
+<p>构建 Flink 之前你需要获得源代码。 <a href="http://flink.apache.org/downloads.html">下载发布版本源代码</a> 或者 <a href="https://github.com/apache/flink">克隆 git 版本库</a> 均可。</p>
+
+<p>另外你需要 <strong>Maven 3</strong> 和 <strong>JDK</strong>。 构建Flink <strong>至少需要 Java 7</strong>。 我们推荐使用 Java 8。</p>
+
+<p>从git版本库克隆源码：</p>
+
+<div class="highlight"><pre><code class="language-bash">git clone https://github.com/apache/flink</code></pre></div>
+
+<p>以最简单的方式构建 Flink 只需运行：</p>
+
+<div class="highlight"><pre><code class="language-bash">mvn clean install -DskipTests</code></pre></div>
+
+<p>这条命令的意思是<a href="http://maven.apache.org">Maven</a> (<code>mvn</code>)首先移除所有已经存在的构建(<code>clean</code>)并且创建一个新的Flink二进制发布版本(<code>install</code>)。<code>-DskipTests</code>参数禁止Maven执行测试程序。</p>
+
+<p>以默认方式构建源码将包含Hadoop 2 YARN客户端</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="hadoop-版本">Hadoop 版本</h2>
+
+<p><span class="label label-info">Info</span> 大多数用户并不需要手动执行此操作。 <a href="http://flink.apache.org/downloads.html">下载页面</a> 包含常见 Hadoop 版本对应的 Flink 二进制包。</p>
+
+<p>Flink 所依赖的 HDFS 和 YARN 均来自于<a href="http://hadoop.apache.org">Apache Hadoop</a>。目前存在多个不同Hadoop版本（包括上游项目及不同Hadoop发行版）。如果使用错误的版本组合，可能会导致异常。</p>
+
+<p>我们需要区分两个Hadoop主要发布版本：</p>
+<ul>
+  <li><strong>Hadoop 1</strong>, 以0或1开头的所有版本, 如 <em>0.20</em>, <em>0.23</em> 和 <em>1.2.1</em>。</li>
+  <li><strong>Hadoop 2</strong>, 以2开头的所有版本, 如 <em>2.6.0</em>。</li>
+</ul>
+
+<p>Hadoop 1 和 Hadoop 2 中间主要区别在于是否使用 <a href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">Hadoop YARN</a>管理Hadoop集群资源。</p>
+
+<p><strong>默认情况下, 构建 Flink 将使用 Hadoop 2 依赖</strong>。</p>
+
+<h3 id="hadoop-1">Hadoop 1</h3>
+
+<p>使用下列命令构建基于Hadoop 1版本的Flink：</p>
+
+<div class="highlight"><pre><code class="language-bash">mvn clean install -DskipTests -Dhadoop.profile<span class="o">=</span>1</code></pre></div>
+
+<p><code>-Dhadoop.profile=1</code> 指明Maven使用 Hadoop 1构建 Flink。需要注意的是在不同Hadoop版本中包含的特性可能发生改变。特别是在Hadoop 1 版本中不支持 YARN 和 HBase。</p>
+
+<h3 id="hadoop-2x">Hadoop 2.x</h3>
+
+<p>构建 Flink Hadoop 2.X版本只支持 Hadoop 2.3.0 以上。
+你可以指定一个Hadoop版本用于源码构建：</p>
+
+<div class="highlight"><pre><code class="language-bash">mvn clean install -DskipTests -Dhadoop.version<span class="o">=</span>2.6.1</code></pre></div>
+
+<h4 id="hadoop-230-之前版本">Hadoop 2.3.0 之前版本</h4>
+
+<p>Hadoop 2.X 版本仅在 2.3.0 之后支持 YARN 特性。如果需要使用低于 2.3.0 的版本，你可以使用 <code>-P!include-yarn</code> 参数移除对于 YARN 的支持。</p>
+
+<p>使用下列命令将会使用Hadoop <code>2.2.0</code>版本进行构建：</p>
+
+<div class="highlight"><pre><code class="language-bash">mvn clean install -Dhadoop.version<span class="o">=</span>2.2.0 -P!include-yarn</code></pre></div>
+
+<h3 id="发行商版本">发行商版本</h3>
+
+<p>使用下列命令指定一个发行商版本：</p>
+
+<div class="highlight"><pre><code class="language-bash">mvn clean install -DskipTests -Pvendor-repos -Dhadoop.version<span class="o">=</span>2.6.1-cdh5.0.0</code></pre></div>
+
+<p>使用 <code>-Pvendor-repos</code> 表示启动了包含Cloudera, Hortonworks 和 MapR这些当前流行的Hadoop发行版本 Maven <a href="http://maven.apache.org/guides/introduction/introduction-to-profiles.html">build profile</a></p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="scala-版本">Scala 版本</h2>
+
+<p><span class="label label-info">Info</span> 用户如果仅使用Java API则可以 <em>忽略</em> 这部分内容。</p>
+
+<p>Flink 有一套<a href="http://scala-lang.org">Scala</a>编写的API，代码库和运行时模块。用户在使用Scala API和代码库时需要和自己工程中的Scala版本相匹配。</p>
+
+<p><strong>默认情况下, Flink 使用 Scala 2.10 版本进行构建</strong>。你可以使用如下脚本变更默认Scala版本，用来基于Scala <em>2.11</em> 构建Flink。</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="c"># 从 Scala 2.10 版本 切换到 Scala 2.11 版本</span>
+tools/change-scala-version.sh 2.11
+<span class="c"># 基于Scala 2.11 版本构建Flink</span>
+mvn clean install -DskipTests</code></pre></div>
+
+<p>为了根据特定 Scala 版本进行构建，需要切换到相应二进制版本并添加 <em>语言版本</em> 作为附加构建属性。
+例如，使用 Scala 2.11.4 版本进行构建需要执行：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="c"># 切换到 Scala 2.11 版本</span>
+tools/change-scala-version.sh 2.11
+<span class="c"># 使用 Scala 2.11.4 版本进行构建</span>
+mvn clean install -DskipTests -Dscala.version<span class="o">=</span>2.11.4</code></pre></div>
+
+<p>Flink 基于 Scala <em>2.10</em> 版本开发且额外经过 Scala <em>2.11</em> 版本测试。这两个版本是支持的。更早的版本 (如 Scala <em>2.9</em>) <em>不再</em>支持.</p>
+
+<p>是否兼容 Scala 的新版本，取决于 Flink 所使用的语言特性是否有重大改变, 以及 Flink 所依赖的组件在新版本Scala的兼容情况。 由Scala编写的依赖库包括<em>Kafka</em>, <em>Akka</em>, <em>Scalatest</em>, 和 <em>scopt</em>。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="加密文件系统">加密文件系统</h2>
+
+<p>如果你的 home 目录是加密的，则可能会遇到 <code>java.io.IOException: File name too long</code> 异常. 一些加密文件系统，比如 Ubuntu 所使用的 encfs，不允许长文件名，这会导致这种错误。</p>
+
+<p>修改办法是添加如下配置:</p>
+
+<div class="highlight"><pre><code class="language-xml"><span class="nt">&lt;args&gt;</span>
+    <span class="nt">&lt;arg&gt;</span>-Xmax-classfile-name<span class="nt">&lt;/arg&gt;</span>
+    <span class="nt">&lt;arg&gt;</span>128<span class="nt">&lt;/arg&gt;</span>
+<span class="nt">&lt;/args&gt;</span></code></pre></div>
+
+<p>进入导致这个错误的模块的 <code>pom.xml</code> 文件的编译配置中。如果错误出现在 <code>flink-yarn</code> 模块中，上面的配置需要加入到 <code>scala-maven-plugin</code> 中<code>&lt;configuration&gt;</code> 标签下。更多信息见 <a href="https://issues.apache.org/jira/browse/FLINK-2003">这个 issue</a>。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="内部细节">内部细节</h2>
+
+<p><a href="http://maven.apache.org/pom.html#Properties">properties</a> 和 <a href="http://maven.apache.org/guides/introduction/introduction-to-profiles.html">build profiles</a> 用来控制Maven 的构建流程。 Flink 有两个profile，分别用来控制Hadoop 1 和 Hadoop 2。在 <code>hadoop2</code> 配置打开启的情况下（默认开启），系统会构建 YARN 客户端。</p>
+
+<p>构建时设置 <code>-Dhadoop.profile=1</code> 将使用 <code>hadoop1</code> profile。根据 profile ，可以设置两个Hadoop版本。对于 <code>hadoop1</code> 默认使用 1.2.1版本，<code>hadoop2</code> 默认使用2.3.0版本。</p>
+
+<p>你可以使用 <code>hadoop-two.version</code>(或者 <code>hadoop-one.version</code>) 属性变更版本。例如 <code>-Dhadoop-two.version=2.4.0</code>。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+     <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/setup/building.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+  </div>
+  
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

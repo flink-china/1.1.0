@@ -1,0 +1,638 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: 容错</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+
+      
+      <li class="active">容错</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>容错</h1>
+
+      <!-- Content -->
+      
+
+<p>Flink容错机制能够在程序出现异常状态时恢复并继续运行。故障包括机器硬件故障，网络故障和程序异常中断等。</p>
+
+<ul id="markdown-toc">
+  <li><a href="#streaming-容错机制" id="markdown-toc-streaming-容错机制">Streaming 容错机制</a>    <ul>
+      <li><a href="#data-source-和-sink-容错保证" id="markdown-toc-data-source-和-sink-容错保证">Data Source 和 Sink 容错保证</a></li>
+    </ul>
+  </li>
+  <li><a href="#重启策略" id="markdown-toc-重启策略">重启策略</a>    <ul>
+      <li><a href="#固定延迟重启策略" id="markdown-toc-固定延迟重启策略">固定延迟重启策略</a></li>
+      <li><a href="#不重启策略" id="markdown-toc-不重启策略">不重启策略</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="streaming-容错机制">Streaming 容错机制</h2>
+
+<p>Flink checkpoint 机制能够在程序失败之后恢复任务。checkpoint 机制需要依赖于如 Apache Kafka 这样的<em>可持久化</em> 并且能重放历史数据的数据源。</p>
+
+<p>Checkpoint 机制存储了 data sources 和 data sinks 的处理进度、window 的状态、以及用户自定义的状态(见<a href="state.html">Working with State</a>) ，以保证只处理一次的语义。根据<a href="state_backends.html">state backend</a>的配置，checkpoint 可以存储在 JobManager 内存, 文件系统以及数据库中。</p>
+
+<p><a href="/1.1.0/internals/stream_checkpointing.html">Streaming 容错文档</a> 描述了 Flink streaming 容错机制的技术细节.</p>
+
+<p>在 <code>StreamExecutionEnvironment</code> 上调用 <code>enableCheckpointing(n)</code> 可以开启 checkpoint 机制 , <em>n</em> 是 checkpoint 毫秒时间间隔。</p>
+
+<p>checkpoint 其他参数包括:</p>
+
+<ul>
+  <li>
+    <p><em>Number of retries</em>: <code>setNumberOfExecutionRerties()</code>方法定义了job失败后的重试次数。当 checkpoint 机制开启的时候,且这个值没有显式指定时，job会无限重试。</p>
+  </li>
+  <li>
+    <p><em>exactly-once vs. at-least-once</em>: 可以通过调用 <code>setCheckpointingMode()</code> 方法在两个一致性级别之间选择其中之一。Exactly-once 更适合大多数程序。 At-least-once 适用于极低延迟 (几毫秒) 的应用.</p>
+  </li>
+  <li>
+    <p><em>number of concurrent checkpoints</em>: 默认情况下, 当有一个 checkpoint 在运行时，系统不会触发另一个 checkpoint。这可以确保 topology 不会在 checkpoint 上花费过多时间并且不会与数据流的处理竞争资源。然而，有时仍然需要允许多个重叠的 checkpoint 操作，这对于有确定延迟（如调用需要一定响应时间的外部服务）但又想频繁地做 checkpoint（百毫秒级别，为了在失败情况下重新处理尽量少的数据量）的处理流程是有意义的。</p>
+  </li>
+  <li>
+    <p><em>checkpoint 超时</em>: 如果 checkpoint 在该时间内还未完成，则正在进行中的 checkpoint 会被中断。</p>
+  </li>
+</ul>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="c1">// start a checkpoint every 1000 ms</span>
+<span class="n">env</span><span class="o">.</span><span class="na">enableCheckpointing</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+
+<span class="c1">// advanced options:</span>
+
+<span class="c1">// set mode to exactly-once (this is the default)</span>
+<span class="n">env</span><span class="o">.</span><span class="na">getCheckpointConfig</span><span class="o">().</span><span class="na">setCheckpointingMode</span><span class="o">(</span><span class="n">CheckpointingMode</span><span class="o">.</span><span class="na">EXACTLY_ONCE</span><span class="o">);</span>
+
+<span class="c1">// checkpoints have to complete within one minute, or are discarded</span>
+<span class="n">env</span><span class="o">.</span><span class="na">getCheckpointConfig</span><span class="o">().</span><span class="na">setCheckpointTimeout</span><span class="o">(</span><span class="mi">60000</span><span class="o">);</span>
+
+<span class="c1">// allow only one checkpoint to be in progress at the same time</span>
+<span class="n">env</span><span class="o">.</span><span class="na">getCheckpointConfig</span><span class="o">().</span><span class="na">setMaxConcurrentCheckpoints</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">StreamExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span><span class="o">()</span>
+
+<span class="c1">// start a checkpoint every 1000 ms</span>
+<span class="n">env</span><span class="o">.</span><span class="n">enableCheckpointing</span><span class="o">(</span><span class="mi">1000</span><span class="o">)</span>
+
+<span class="c1">// advanced options:</span>
+
+<span class="c1">// set mode to exactly-once (this is the default)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">getCheckpointConfig</span><span class="o">.</span><span class="n">setCheckpointingMode</span><span class="o">(</span><span class="nc">CheckpointingMode</span><span class="o">.</span><span class="nc">EXACTLY_ONCE</span><span class="o">)</span>
+
+<span class="c1">// checkpoints have to complete within one minute, or are discarded</span>
+<span class="n">env</span><span class="o">.</span><span class="n">getCheckpointConfig</span><span class="o">.</span><span class="n">setCheckpointTimeout</span><span class="o">(</span><span class="mi">60000</span><span class="o">)</span>
+
+<span class="c1">// allow only one checkpoint to be in progress at the same time</span>
+<span class="n">env</span><span class="o">.</span><span class="n">getCheckpointConfig</span><span class="o">.</span><span class="n">setMaxConcurrentCheckpoints</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span></code></pre></figure>
+
+  </div>
+</div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h3 id="data-source-和-sink-容错保证">Data Source 和 Sink 容错保证</h3>
+
+<p>只有当数据源参与了快照机制，Flink 才能保证只对用户状态更新一次（exactly-once）。目前 Kafka source (和内部序列生成器) 可以保证，但其他 source 不能保证。下表列出了Flink source 状态更新保证：</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 25%">Source</th>
+      <th class="text-left" style="width: 25%">Guarantees</th>
+      <th class="text-left">Notes</th>
+    </tr>
+   </thead>
+   <tbody>
+        <tr>
+            <td>Apache Kafka</td>
+            <td>exactly once</td>
+            <td>使用与你Apache Kafka 版本相匹配的 connector</td>
+        </tr>
+        <tr>
+            <td>RabbitMQ</td>
+            <td>at most once (v 0.10) / exactly once (v 1.0) </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Twitter Streaming API</td>
+            <td>at most once</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Collections</td>
+            <td>exactly once</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Files</td>
+            <td>at least once</td>
+            <td>失败时，会从文件开始处继续读取</td>
+        </tr>
+        <tr>
+            <td>Sockets</td>
+            <td>at most once</td>
+            <td></td>
+        </tr>
+  </tbody>
+</table>
+
+<p>为了确保端到端的 exactly-once 消息传递(除了 exactly-once 状态语义)，data sink 也需要参与 checkpoint 机制。下表列出了和 Flink 绑定的 sink 的传递保证（假设状态是 exactly-once 更新了）：</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 25%">Sink</th>
+      <th class="text-left" style="width: 25%">Guarantees</th>
+      <th class="text-left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td>HDFS rolling sink</td>
+        <td>exactly once</td>
+        <td>是否实现取决于 Hadoop 版本</td>
+    </tr>
+    <tr>
+        <td>Elasticsearch</td>
+        <td>at least once</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Kafka producer</td>
+        <td>at least once</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>File sinks</td>
+        <td>at least once</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Socket sinks</td>
+        <td>at least once</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Standard output</td>
+        <td>at least once</td>
+        <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h2 id="重启策略">重启策略</h2>
+
+<p>Flink提供多种不同重启策略用于控制job在失败时如何重启。当没有指定 job 的重启策略时，集群会使用默认的重启策略。如果job提交时指定了重启策略，会覆盖集群默认重启策略。</p>
+
+<p>默认重启策略由 Flink 配置文件 <code>flink-conf.yaml</code> 所指定。配置参数 <em>restart-strategy</em> 定义了使用策略。默认情况下，不重启策略会被使用。下列列出了可用的重启策略。</p>
+
+<p>每个重启策略都有一套自己的参数用来控制他的行为。这些参数也在配置文件中指定。每一个重启策略的描述含有更多关于配置值的信息。</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 50%">重启策略</th>
+      <th class="text-left">restart-strategy 的值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td>固定延迟</td>
+        <td>fixed-delay</td>
+    </tr>
+    <tr>
+        <td>不重启</td>
+        <td>none</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>除了默认重启策略，每个Flink job也可以指定各自重启策略。重启策略由 <code>ExecutionEnvironment</code> 中<code>setRestartStrategy</code> 方法指定。注意这对 <code>StreamExecutionEnvironment</code> 也是生效的。
+下面的例子展示了如何在job中设置固定延迟的重启策略。在失败的情况下，系统会重试3次，每次之间间隔10秒。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+<span class="n">env</span><span class="o">.</span><span class="na">setRestartStrategy</span><span class="o">(</span><span class="n">RestartStrategies</span><span class="o">.</span><span class="na">fixedDelay</span><span class="o">(</span>
+  <span class="mi">3</span><span class="o">,</span> <span class="c1">// number of restart attempts </span>
+  <span class="mi">10000</span> <span class="c1">// delay in milliseconds</span>
+<span class="o">));</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span><span class="o">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">setRestartStrategy</span><span class="o">(</span><span class="nc">RestartStrategies</span><span class="o">.</span><span class="n">fixedDelay</span><span class="o">(</span>
+  <span class="mi">3</span><span class="o">,</span> <span class="c1">// number of restart attempts </span>
+  <span class="mi">10000</span> <span class="c1">// delay in milliseconds</span>
+<span class="o">))</span></code></pre></figure>
+
+  </div>
+</div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h3 id="固定延迟重启策略">固定延迟重启策略</h3>
+
+<p>固定延迟重启策略会在指定次数之内重启重启job。如果超过最大重启次数，job被认定为最终失败。两次连续重启尝试之间，等待一个固定时间间隔。</p>
+
+<p>这个策略是通过在 <code>flink-conf.yaml</code> 中设置下列参数来启用的：</p>
+
+<div class="highlight"><pre><code>restart-strategy: fixed-delay
+</code></pre></div>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 40%">配置参数</th>
+      <th class="text-left" style="width: 40%">描述</th>
+      <th class="text-left">默认值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td><it>restart-strategy.fixed-delay.attempts</it></td>
+        <td>重启尝试次数</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td><it>restart-strategy.fixed-delay.delay</it></td>
+        <td>两次重启尝试之间的延迟时间</td>
+        <td><it>akka.ask.timeout</it></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight"><pre><code>restart-strategy.fixed-delay.attempts: 3
+restart-strategy.fixed-delay.delay: 10 s
+</code></pre></div>
+
+<p>重启延迟也可以通过编程方式指定:</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+<span class="n">env</span><span class="o">.</span><span class="na">setRestartStrategy</span><span class="o">(</span><span class="n">RestartStrategies</span><span class="o">.</span><span class="na">fixedDelay</span><span class="o">(</span>
+  <span class="mi">3</span><span class="o">,</span> <span class="c1">// number of restart attempts </span>
+  <span class="mi">10000</span> <span class="c1">// delay in milliseconds</span>
+<span class="o">));</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span><span class="o">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">setRestartStrategy</span><span class="o">(</span><span class="nc">RestartStrategies</span><span class="o">.</span><span class="n">fixedDelay</span><span class="o">(</span>
+  <span class="mi">3</span><span class="o">,</span> <span class="c1">// number of restart attempts </span>
+  <span class="mi">10000</span> <span class="c1">// delay in milliseconds</span>
+<span class="o">))</span></code></pre></figure>
+
+  </div>
+</div>
+
+<h4 id="重启尝试次数">重启尝试次数</h4>
+
+<p>在 job 被宣告失败前，Flink 重试执行的次数可以通过 <em>restart-strategy.fixed-delay.attempts</em> 参数来配置。</p>
+
+<p>默认为 <strong>1</strong>.</p>
+
+<h4 id="重试间隔">重试间隔</h4>
+
+<p>执行重试可配置间隔时间。 重试间隔意味着在一次执行失败之后，并不是立即重新执行，而是延迟一段时间之后。</p>
+
+<p>当程序与外部系统交互时，延迟重试会很有用，例如连接或等待中的事务达到了超时时间。</p>
+
+<p>默认值是 <em>akka.ask.timeout</em> 的值。</p>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+<h3 id="不重启策略">不重启策略</h3>
+
+<p>job 运行失败且不尝试重启。</p>
+
+<div class="highlight"><pre><code>restart-strategy: none
+</code></pre></div>
+
+<p>不重启策略可以用编程方式声明:</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+<span class="n">env</span><span class="o">.</span><span class="na">setRestartStrategy</span><span class="o">(</span><span class="n">RestartStrategies</span><span class="o">.</span><span class="na">noRestart</span><span class="o">());</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span><span class="o">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">setRestartStrategy</span><span class="o">(</span><span class="nc">RestartStrategies</span><span class="o">.</span><span class="n">noRestart</span><span class="o">())</span></code></pre></figure>
+
+  </div>
+</div>
+
+<p><a href="#top" class="top pull-right"><span class="glyphicon glyphicon-chevron-up"></span> Back to top</a></p>
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/streaming/fault_tolerance.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

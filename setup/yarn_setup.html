@@ -1,0 +1,552 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: YARN 安装</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown active">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class="active"><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+  
+  
+  <div class="col-md-8 col-md-offset-2 text">
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <h1>YARN 安装</h1>
+
+
+<ul id="markdown-toc">
+  <li><a href="#快速起步" id="markdown-toc-快速起步">快速起步</a>    <ul>
+      <li><a href="#在-yarn-上启动一个-flink-集群" id="markdown-toc-在-yarn-上启动一个-flink-集群">在 YARN 上启动一个 Flink 集群</a></li>
+      <li><a href="#在-yarn-上运行-flink-任务" id="markdown-toc-在-yarn-上运行-flink-任务">在 YARN 上运行 Flink 任务</a></li>
+    </ul>
+  </li>
+  <li><a href="#flink-yarn-会话" id="markdown-toc-flink-yarn-会话">Flink YARN 会话</a>    <ul>
+      <li><a href="#启动-flink-会话" id="markdown-toc-启动-flink-会话">启动 Flink 会话</a></li>
+      <li><a href="#提交任务到-flink" id="markdown-toc-提交任务到-flink">提交任务到 Flink</a></li>
+    </ul>
+  </li>
+  <li><a href="#在-yarn-上运行单个-flink-任务" id="markdown-toc-在-yarn-上运行单个-flink-任务">在 YARN 上运行单个 Flink 任务</a></li>
+  <li><a href="#flink-on-yarn-的恢复机制" id="markdown-toc-flink-on-yarn-的恢复机制">Flink on YARN 的恢复机制</a></li>
+  <li><a href="#调试失败的-yarn-会话" id="markdown-toc-调试失败的-yarn-会话">调试失败的 YARN 会话</a>    <ul>
+      <li><a href="#日志文件" id="markdown-toc-日志文件">日志文件</a></li>
+      <li><a href="#yarn-客户端控制台--web-界面" id="markdown-toc-yarn-客户端控制台--web-界面">YARN 客户端控制台 &amp; Web 界面</a></li>
+    </ul>
+  </li>
+  <li><a href="#为特定的-hadoop-版本构建-yarn-客户端" id="markdown-toc-为特定的-hadoop-版本构建-yarn-客户端">为特定的 Hadoop 版本构建 YARN 客户端</a></li>
+  <li><a href="#在防火墙背后运行-flink-on-yarn" id="markdown-toc-在防火墙背后运行-flink-on-yarn">在防火墙背后运行 Flink on YARN</a></li>
+  <li><a href="#内部实现" id="markdown-toc-内部实现">内部实现</a></li>
+</ul>
+
+<h2 id="快速起步">快速起步</h2>
+
+<h3 id="在-yarn-上启动一个-flink-集群">在 YARN 上启动一个 Flink 集群</h3>
+
+<p>启动一个有 4 个 TaskManager （每个都有 4GB 的堆内存）的 YARN 会话：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="c"># get the hadoop2 package from the Flink download page at</span>
+<span class="c"># http://flink.apache.org/downloads.html</span>
+curl -O &lt;flink_hadoop2_download_url&gt;
+tar xvzf flink-1.1.0-bin-hadoop2.tgz
+<span class="nb">cd </span>flink-1.1.0/
+./bin/yarn-session.sh -n <span class="m">4</span> -jm <span class="m">1024</span> -tm 4096</code></pre></div>
+
+<p><code>-s</code> 标记可以用来指定每个 TaskMangager 的 slot 个数。我们建议设置 slot 的个数为每个机器的核数。</p>
+
+<p>当会话成功启动后，你就可以使用 <code>./bin/flink</code> 工具提交任务到集群了。</p>
+
+<h3 id="在-yarn-上运行-flink-任务">在 YARN 上运行 Flink 任务</h3>
+
+<div class="highlight"><pre><code class="language-bash"><span class="c"># get the hadoop2 package from the Flink download page at</span>
+<span class="c"># http://flink.apache.org/downloads.html</span>
+curl -O &lt;flink_hadoop2_download_url&gt;
+tar xvzf flink-1.1.0-bin-hadoop2.tgz
+<span class="nb">cd </span>flink-1.1.0/
+./bin/flink run -m yarn-cluster -yn <span class="m">4</span> -yjm <span class="m">1024</span> -ytm <span class="m">4096</span> ./examples/batch/WordCount.jar</code></pre></div>
+
+<h2 id="flink-yarn-会话">Flink YARN 会话</h2>
+
+<p>Apache <a href="http://hadoop.apache.org/">Hadoop YARN</a> 是一个集群资源管理框架。它允许在一个集群之上运行多种分布式应用。Flink 与其他应用程序一同运行在 YARN 之上。如果用户已经安装 YARN，就不需要安装其他东西了。</p>
+
+<p><strong>环境要求</strong></p>
+
+<ul>
+  <li>至少 Apache Hadoop 2.2</li>
+  <li>HDFS (Hadoop Distributed File System) (或者 Hadoop 支持的其他的分布式文件系统)</li>
+</ul>
+
+<p>如果你在使用 Flink YARN 客户端的过程中遇到了问题，请参考 <a href="http://flink.apache.org/faq.html#yarn-deployment">FAQ 章节</a>。</p>
+
+<h3 id="启动-flink-会话">启动 Flink 会话</h3>
+
+<p>按照下面的操作指南学习如何在 YARN 集群中启动一个 Flink 会话。</p>
+
+<p>会话会启动所有需要的 Flink 服务（JobManager 和 TaskManager），因此可以提交程序到集群中。注意每个会话都可以运行多个程序。</p>
+
+<h4 id="下载-flink">下载 Flink</h4>
+
+<p>从<a href="http://flink.apache.org/downloads.html">下载页面</a> 下载 Hadoop 版本 &gt;= 2 对应的 Flink 包。这里面就包含了所需要的文件了。</p>
+
+<p>解压压缩包：</p>
+
+<div class="highlight"><pre><code class="language-bash">tar xvzf flink-1.1.0-bin-hadoop2.tgz
+<span class="nb">cd </span>flink-1.1.0/</code></pre></div>
+
+<h4 id="启动会话">启动会话</h4>
+
+<p>使用下面的命令启动一个会话：</p>
+
+<div class="highlight"><pre><code class="language-bash">./bin/yarn-session.sh</code></pre></div>
+
+<p>这个命令会显示如下的概览：</p>
+
+<div class="highlight"><pre><code class="language-bash">Usage:
+   Required
+     -n,--container &lt;arg&gt;   Number of YARN container to allocate <span class="o">(=</span>Number of Task Managers<span class="o">)</span>
+   Optional
+     -D &lt;arg&gt;                        Dynamic properties
+     -d,--detached                   Start detached
+     -jm,--jobManagerMemory &lt;arg&gt;    Memory <span class="k">for</span> JobManager Container <span class="o">[</span>in MB<span class="o">]</span>
+     -nm,--name                      Set a custom name <span class="k">for</span> the application on YARN
+     -q,--query                      Display available YARN resources <span class="o">(</span>memory, cores<span class="o">)</span>
+     -qu,--queue &lt;arg&gt;               Specify YARN queue.
+     -s,--slots &lt;arg&gt;                Number of slots per TaskManager
+     -tm,--taskManagerMemory &lt;arg&gt;   Memory per TaskManager Container <span class="o">[</span>in MB<span class="o">]</span></code></pre></div>
+
+<p>请注意客户端需要提前设置环境变量 <code>YARN_CONF_DIR</code> 或 <code>HADOOP_CONF_DIR</code>，用来读取 YARN 和 HDFS 配置。</p>
+
+<p><strong>示例：</strong> 执行下面的命令来分配 10 个 TaskManager，每个都拥有 8 GB 的内存和 32 个 slot。</p>
+
+<div class="highlight"><pre><code class="language-bash">./bin/yarn-session.sh -n <span class="m">10</span> -tm <span class="m">8192</span> -s 32</code></pre></div>
+
+<p>系统会使用 <code>conf/flink-config.yaml</code> 中的配置。如果你想要更改配置，请参考 <a href="config.html">配置指南</a>。</p>
+
+<p>Flink on YARN 会覆盖这些配置参数 <code>jobmanager.rpc.address</code>（因为 JobManager 一直被分配在不同的机器上），<code>taskmanager.tmp.dirs</code>（我们使用 YARN 提供了的 tmp 目录）和 <code>parallelism.default</code>（如果指定了 slot 数目）。</p>
+
+<p>如果你不想通过修改配置文件的方法来设置配置参数，你可以通过 <code>-D</code> 标记传入动态属性。所以你可以这样传递参数：<code>-Dfs.overwrite-files=true -Dtaskmanager.network.numberOfBuffers=16368</code></p>
+
+<p>这个例子请求启动 11 个容器，因为对于 ApplicationMaster 和 JobManager 还需要一个额外的容器。</p>
+
+<p>一旦 Flink 在 YARN 集群中部署了，它会显示 JobManager 连接的详细信息。</p>
+
+<p>要停止 YARN 会话，可以通过结束 unix 进程（使用 CTRL+C）或者通过在客户端中输入 ‘stop’。</p>
+
+<h4 id="分离的-yarn-会话">分离的 YARN 会话</h4>
+
+<p>如果你不希望 Flink YARN 客户端一直在运行，也可以启动一个 <strong>分离的</strong> （detached）YARN 会话。只需要加上 <code>-d</code> 或 <code>--detached</code> 参数。</p>
+
+<p>在这种情况下，Flink YARN 客户端只会提交 Flink 到集群中然后关闭自己。注意在这种情况下，不能像上面这样停止 YARN 会话了。</p>
+
+<p>使用 YARN utilities（<code>yarn application -kill &lt;appId&gt;</code>）来结束 YARN 会话。</p>
+
+<h3 id="提交任务到-flink">提交任务到 Flink</h3>
+
+<p>使用下面的命令提交一个 Flink 程序到 YARN 集群：</p>
+
+<div class="highlight"><pre><code class="language-bash">./bin/flink</code></pre></div>
+
+<p>请参考 <a href="/1.1.0/apis/cli.html">命令行客户端</a> 文档。</p>
+
+<p>该命令会显示一个如下的帮助菜单：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="o">[</span>...<span class="o">]</span>
+Action <span class="s2">&quot;run&quot;</span> compiles and runs a program.
+
+  Syntax: run <span class="o">[</span>OPTIONS<span class="o">]</span> &lt;jar-file&gt; &lt;arguments&gt;
+  <span class="s2">&quot;run&quot;</span> action arguments:
+     -c,--class &lt;classname&gt;           Class with the program entry point <span class="o">(</span><span class="s2">&quot;main&quot;</span>
+                                      method or <span class="s2">&quot;getPlan()&quot;</span> method. Only needed
+                                      <span class="k">if</span> the JAR file does not specify the class
+                                      in its manifest.
+     -m,--jobmanager &lt;host:port&gt;      Address of the JobManager <span class="o">(</span>master<span class="o">)</span> to
+                                      which to connect. Use this flag to connect
+                                      to a different JobManager than the one
+                                      specified in the configuration.
+     -p,--parallelism &lt;parallelism&gt;   The parallelism with which to run the
+                                      program. Optional flag to override the
+                                      default value specified in the
+                                      configuration</code></pre></div>
+
+<p>使用 <em>run</em> 操作来提交一个任务到 YARN。客户端自己就能确定 JobManager 的地址。在遇到罕见的问题时，你可以使用 <code>-m</code> 参数传入 JobManager 的地址。JobManager 的地址可以在 YARN 控制台找到。</p>
+
+<p><strong>示例</strong></p>
+
+<div class="highlight"><pre><code class="language-bash">wget -O LICENSE-2.0.txt http://www.apache.org/licenses/LICENSE-2.0.txt
+hadoop fs -copyFromLocal LICENSE-2.0.txt hdfs:/// ...
+./bin/flink run ./examples/batch/WordCount.jar <span class="se">\</span>
+        hdfs:///..../LICENSE-2.0.txt hdfs:///.../wordcount-result.txt</code></pre></div>
+
+<p>如果遇到了下面的错误，请确保所有的 TaskManager 都已经启动了：</p>
+
+<div class="highlight"><pre><code class="language-bash">Exception in thread <span class="s2">&quot;main&quot;</span> org.apache.flink.compiler.CompilerException:
+    Available instances could not be determined from job manager: Connection timed out.</code></pre></div>
+
+<p>你可以在 JobManager 的 Web 界面上检查 TaskManager 的数目是否正确。JobManager 的地址会在 YARN 会话控制台中打印出来。</p>
+
+<p>如果一分钟后 TaskManager 还没有出现，你就需要通过日志文件查找问题原因了。</p>
+
+<h2 id="在-yarn-上运行单个-flink-任务">在 YARN 上运行单个 Flink 任务</h2>
+
+<p>上文描述了如何在 Hadoop YARN 环境中启动一个 Flink 集群。另外，也可以在 YARN 中启动只执行单个任务的 Flink。</p>
+
+<p>请注意该客户端需要提供 <code>-yn</code> 参数值（TaskManager 的数量）。</p>
+
+<p><strong><em>示例:</em></strong></p>
+
+<div class="highlight"><pre><code class="language-bash">./bin/flink run -m yarn-cluster -yn <span class="m">2</span> ./examples/batch/WordCount.jar</code></pre></div>
+
+<p>通过运行 <code>./bin/flink</code>，也可以看到YARN会话的命令行选项。这些选项都带了一个 <code>y</code> 或 <code>yarn</code> （长参数选项）的前缀。</p>
+
+<p>注：通过为每个任务设置不同的环境变量 <code>FLINK_CONF_DIR</code>，可以为每个任务使用不同的配置目录。从 Flink 分发包中复制 <code>conf</code> 目录，然后修改配置，例如，每个任务不同的日志设置。</p>
+
+<p>注：可以结合 <code>-m yarn-cluster</code> 和分离的 YARN 提交形式（<code>yd</code>）来“提交并遗忘”一个 Flink 任务给 YARN 集群。在这种情况下，你的应用程序将无法获得任何累加器的结果或者来自调用 <code>ExecutionEnvironment.execute()</code> 的异常。</p>
+
+<h2 id="flink-on-yarn-的恢复机制">Flink on YARN 的恢复机制</h2>
+
+<p>Flink 的 YARN 客户端有以下的配置参数来控制在容器故障情况下的行为。这些参数可以通过 <code>conf/flink-conf.yaml</code> 来设置，也可以通过启动 YARN 会话时加入 <code>-D</code> 参数来设置。</p>
+
+<ul>
+  <li><code>yarn.reallocate-failed</code>: 该参数控制了 Flink 是否该重新分配失败的 TaskManager 容器。默认：true。</li>
+  <li><code>yarn.maximum-failed-containers</code>: ApplicationMaster 能接受最多的失败容器的数量，直到 YARN 会话失败。默认：初始请求的 TaskManager 个数（<code>-n</code>）。</li>
+  <li><code>yarn.application-attempts</code>: ApplicationMaster（以及它的 TaskManager 容器）的尝试次数。默认值为 1， 当 ApplicationMaster 失败了，整个 YARN 会话也会失败。可以通过设置更大的值来更改 YARN 重启A pplicationMaster 的次数。</li>
+</ul>
+
+<h2 id="调试失败的-yarn-会话">调试失败的 YARN 会话</h2>
+
+<p>有许多原因会导致 Flink YARN 会话部署失败，如一个错误的 Hadoop 安装配置（HDFS 权限，YARN 配置），版本不兼容（在 Cloudera Hadoop 上，运行带有普通 Hadoop 依赖的 Flink），或是其他原因。</p>
+
+<h3 id="日志文件">日志文件</h3>
+
+<p>Flink YARN 会话 在部署期间自己挂了的情况下，用户只能依赖 Hadoop YARN 的日志来进行排查。其中最有用的特性是 <a href="http://hortonworks.com/blog/simplifying-user-logs-management-and-access-in-yarn/">YARN 日志聚合</a>。要启用该功能，用户必须在 <code>yarn-site.xml</code> 中设置 <code>yarn.log-aggregation-enable</code> 属性为 <code>true</code>。一旦被启用了，用户就能通过下面的命令获得一个（失败的）YARN 会话的所有日志。</p>
+
+<div class="highlight"><pre><code>yarn logs -applicationId &lt;application ID&gt;
+</code></pre></div>
+
+<p>注意在会话结束后到日志展现之间需要等一段时间。</p>
+
+<h3 id="yarn-客户端控制台--web-界面">YARN 客户端控制台 &amp; Web 界面</h3>
+
+<p>如果 Flink YARN 客户端在运行时遇到了错误（例如一个 TaskManager 在一段时间后停止工作了），那么它也会在终端打印出错误信息。</p>
+
+<p>除此之外，在 YARN 资源管理 Web 界面（默认端口在 8088）也能看到错误信息。资源管理 Web 界面的端口由 <code>yarn.resourcemanager.webapp.address</code> 配置项决定。</p>
+
+<p>它允许访问运行中的 YARN 应用程序的日志文件，并且能展示失败应用的诊断信息。</p>
+
+<h2 id="为特定的-hadoop-版本构建-yarn-客户端">为特定的 Hadoop 版本构建 YARN 客户端</h2>
+
+<p>用户使用来自像 Hortonworks, Cloudera 和 MapR 等公司的 Hadoop 发行版，这也许需要针对特定的 Hadoop（HDFS）和 YARN 版本构建 Flink。请阅读 <a href="building.html">构建指南</a> 了解更多。</p>
+
+<h2 id="在防火墙背后运行-flink-on-yarn">在防火墙背后运行 Flink on YARN</h2>
+
+<p>一些 YARN 集群使用防火墙来控制集群和其他网络之间的网络流量。在这些情况下，Flink 任务只能从集群内部网络（防火墙背后）提交到 YARN 会话。如果这对于生产用途不是很可行，Flink 允许为所有相关服务配置端口区间。配置了端口区间之后，用户就可以跨防火墙提交任务到 Flink 了。</p>
+
+<p>当前，提交任务需要两个服务：</p>
+
+<ul>
+  <li>JobManager (YARN 中的 ApplicatonMaster)</li>
+  <li>BlobServer （运行在 JobManager 中）。</li>
+</ul>
+
+<p>当提交一个任务给 Flink，BlobServer 会分发带有用户代码的 jar 文件到所有 worker 节点（TaskManager）。JobManager 收到了该任务，然后触发执行过程。</p>
+
+<p>用来指定端口号的这两个配置参数如下：</p>
+
+<ul>
+  <li><code>yarn.application-master.port</code></li>
+  <li><code>blob.server.port</code></li>
+</ul>
+
+<p>这两个配置选项可以接受单个端口（如：”50010”），区间端口（”50000-50025”），或者以上两者的结合（”50010,50011,50020-50025,50050-50075”）。</p>
+
+<p>（Hadoop 正在使用一个类似的机制，那个配置参数叫做 <code>yarn.app.mapreduce.am.job.client.port-range</code> ）</p>
+
+<h2 id="内部实现">内部实现</h2>
+
+<p>本章节简要介绍 Flink 是如何与 YARN 进行交互的。</p>
+
+<p><img src="fig/FlinkOnYarn.svg" class="img-responsive" /></p>
+
+<p>YARN 客户端需要访问 Hadoop 配置，从而连接 YARN 资源管理器和 HDFS。可以使用下面的策略来决定 Hadoop 配置：</p>
+
+<ul>
+  <li>测试 <code>YARN_CONF_DIR</code>, <code>HADOOP_CONF_DIR</code> 或 <code>HADOOP_CONF_PATH</code> 环境变量是否设置了（按该顺序测试）。如果它们中有一个被设置了，那么它们就会用来读取配置。</li>
+  <li>如果上面的策略失败了（如果正确安装了 YARN 的话，这不应该会发生），客户端会使用 <code>HADOOP_HOME</code> 环境变量。如果该变量设置了，客户端会尝试访问 <code>$HADOOP_HOME/etc/hadoop</code> (Hadoop 2) 和 <code>$HADOOP_HOME/conf</code> (Hadoop 1)。</li>
+</ul>
+
+<p>当启动一个新的 Flink YARN 会话，客户端首先会检查所请求的资源（容器和内存）是否可用。之后，它会上传包含了 Flink 和配置的 jar 到 HDFS（步骤 1）。</p>
+
+<p>客户端的下一步是请求（步骤 2）一个 YARN 容器启动 <em>ApplicationMaster</em> （步骤 3）。因为客户端将配置和 jar 文件作为容器的资源注册了，所以运行在特定机器上的 YARN 的 NodeManager 会负责准备容器（例如，下载文件）。一旦这些完成了，<em>ApplicationMaster</em> (AM) 就启动了。</p>
+
+<p><em>JobManager</em> 和 AM 运行在同一个容器中。一旦它们成功地启动了，AM 知道 JobManager 的地址（它自己）。它会为 TaskManager 生成一个新的 Flink 配置文件（这样它们才能连上 JobManager）。该文件也同样会上传到 HDFS。另外，<em>AM</em> 容器同时提供了 Flink 的 Web 界面服务。Flink 用来提供服务的端口是由用户 + 应用程序 id 作为偏移配置的。这使得用户能够并行执行多个 Flink YARN 会话。</p>
+
+<p>之后，AM 开始为 Flink 的 TaskManager 分配容器，这会从 HDFS 下载 jar 文件和修改过的配置文件。一旦这些步骤完成了，Flink 就安装完成并准备接受任务了。</p>
+
+     <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/setup/yarn_setup.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+  </div>
+  
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

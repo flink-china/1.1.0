@@ -1,0 +1,461 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: Elasticsearch Connector</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+
+      
+      
+      
+
+      
+
+      <li><a href="/1.1.0/apis/streaming/connectors/">Connectors</a></li>
+      
+      
+      <li class="active">Elasticsearch</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>Elasticsearch Connector</h1>
+
+      <!-- Content -->
+      
+
+<p>这个连接器提供了 Sink (接收器:以下统称为 Sink )可以向 <a href="https://elastic.co/">Elasticsearch</a> 的索引中写数据。要使用这个连接器，需要在工程中添加以下依赖。</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>flink-connector-elasticsearch_2.10<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></figure>
+
+<p>注意，目前 streaming 连接器不是二进制发行包的一部分。
+关于如何打包程序和依赖库，并在集群执行，请参考 <a href="/1.1.0/apis/cluster_execution.html#linking-with-modules-not-contained-in-the-binary-distribution">这里</a></p>
+
+<h4 id="安装-elasticsearch">安装 Elasticsearch</h4>
+
+<p>创建 Elasticsearch 集群可以参见 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html">这里</a>.
+保证创建并牢记集群的名字，当创建一个 Sink 向集群中写入数据时，需要配置集群的名字。</p>
+
+<h4 id="elasticsearch-sink">Elasticsearch Sink</h4>
+<p>Elasticsearch Sink 提供了一个可以向 Elasticsearch 索引写入数据的接收器。</p>
+
+<p>这个接收器可以使用两个不同的方式与 Elasticsearch 通信。</p>
+
+<ol>
+  <li>嵌入式的集群节点(embedded Node)</li>
+  <li>客户端连接(TransportClient)</li>
+</ol>
+
+<p>参考 <a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/client.html">这里</a>
+查看这两种模式的区别。</p>
+
+<p>下方代码演示了如何使用嵌入式的节点创建 Sink ，与集群进行通信。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">input</span> <span class="o">=</span> <span class="o">...;</span>
+
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">config</span> <span class="o">=</span> <span class="n">Maps</span><span class="o">.</span><span class="na">newHashMap</span><span class="o">();</span>
+<span class="c1">// This instructs the sink to emit after every element, otherwise they would be buffered</span>
+<span class="n">config</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;bulk.flush.max.actions&quot;</span><span class="o">,</span> <span class="s">&quot;1&quot;</span><span class="o">);</span>
+<span class="n">config</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;cluster.name&quot;</span><span class="o">,</span> <span class="s">&quot;my-cluster-name&quot;</span><span class="o">);</span>
+
+<span class="n">input</span><span class="o">.</span><span class="na">addSink</span><span class="o">(</span><span class="k">new</span> <span class="n">ElasticsearchSink</span><span class="o">&lt;&gt;(</span><span class="n">config</span><span class="o">,</span> <span class="k">new</span> <span class="n">IndexRequestBuilder</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">IndexRequest</span> <span class="nf">createIndexRequest</span><span class="o">(</span><span class="n">String</span> <span class="n">element</span><span class="o">,</span> <span class="n">RuntimeContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">json</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">,</span> <span class="n">element</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">Requests</span><span class="o">.</span><span class="na">indexRequest</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">index</span><span class="o">(</span><span class="s">&quot;my-index&quot;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">type</span><span class="o">(</span><span class="s">&quot;my-type&quot;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">source</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}));</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">input</span><span class="k">:</span> <span class="kt">DataStream</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">config</span> <span class="k">=</span> <span class="k">new</span> <span class="n">util</span><span class="o">.</span><span class="nc">HashMap</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">String</span><span class="o">]</span>
+<span class="n">config</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">&quot;bulk.flush.max.actions&quot;</span><span class="o">,</span> <span class="s">&quot;1&quot;</span><span class="o">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">&quot;cluster.name&quot;</span><span class="o">,</span> <span class="s">&quot;my-cluster-name&quot;</span><span class="o">)</span>
+
+<span class="n">text</span><span class="o">.</span><span class="n">addSink</span><span class="o">(</span><span class="k">new</span> <span class="nc">ElasticsearchSink</span><span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="k">new</span> <span class="nc">IndexRequestBuilder</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">createIndexRequest</span><span class="o">(</span><span class="n">element</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">ctx</span><span class="k">:</span> <span class="kt">RuntimeContext</span><span class="o">)</span><span class="k">:</span> <span class="kt">IndexRequest</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">json</span> <span class="k">=</span> <span class="k">new</span> <span class="n">util</span><span class="o">.</span><span class="nc">HashMap</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">AnyRef</span><span class="o">]</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">,</span> <span class="n">element</span><span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;SENDING: &quot;</span> <span class="o">+</span> <span class="n">element</span><span class="o">)</span>
+    <span class="nc">Requests</span><span class="o">.</span><span class="n">indexRequest</span><span class="o">.</span><span class="n">index</span><span class="o">(</span><span class="s">&quot;my-index&quot;</span><span class="o">).</span><span class="n">`type`</span><span class="o">(</span><span class="s">&quot;my-type&quot;</span><span class="o">).</span><span class="n">source</span><span class="o">(</span><span class="n">json</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}))</span></code></pre></figure>
+
+  </div>
+</div>
+
+<p>注意，如何使用 String 类型的 Map 对象来配置 Sink。配置的 keys 记录在 Elasticsearch 的文档中 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">这里</a>.
+特别重要的是 <code>cluster.name</code> 参数，必须和集群配置的名字一致。</p>
+
+<p>底层实现中， sink 使用 <code>BulkProcessor</code> 方式向集群批量发送索引请求。
+这会在发送请求之前缓存每个元素。<code>BulkProcessor</code> 操作可以使用以下这些参数进行配置：</p>
+<ul>
+  <li><strong>bulk.flush.max.actions</strong>: 最大缓存数</li>
+  <li><strong>bulk.flush.max.size.mb</strong>: 最大缓存数据大小(单位MB)</li>
+  <li><strong>bulk.flush.interval.ms</strong>: 不考虑以上两个配置,集群刷新数据的间隔时间（ms）</li>
+</ul>
+
+<p>下方的示例代码使用 <code>TransportClient</code> 方式连接集群，实现功能同 embedded Node 方式。</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">input</span> <span class="o">=</span> <span class="o">...;</span>
+
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">config</span> <span class="o">=</span> <span class="n">Maps</span><span class="o">.</span><span class="na">newHashMap</span><span class="o">();</span>
+<span class="c1">// This instructs the sink to emit after every element, otherwise they would be buffered</span>
+<span class="n">config</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;bulk.flush.max.actions&quot;</span><span class="o">,</span> <span class="s">&quot;1&quot;</span><span class="o">);</span>
+<span class="n">config</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;cluster.name&quot;</span><span class="o">,</span> <span class="s">&quot;my-cluster-name&quot;</span><span class="o">);</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">TransportAddress</span><span class="o">&gt;</span> <span class="n">transports</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+<span class="n">transports</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nf">InetSocketTransportAddress</span><span class="o">(</span><span class="s">&quot;node-1&quot;</span><span class="o">,</span> <span class="mi">9300</span><span class="o">));</span>
+<span class="n">transports</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nf">InetSocketTransportAddress</span><span class="o">(</span><span class="s">&quot;node-2&quot;</span><span class="o">,</span> <span class="mi">9300</span><span class="o">));</span>
+
+<span class="n">input</span><span class="o">.</span><span class="na">addSink</span><span class="o">(</span><span class="k">new</span> <span class="n">ElasticsearchSink</span><span class="o">&lt;&gt;(</span><span class="n">config</span><span class="o">,</span> <span class="n">transports</span><span class="o">,</span> <span class="k">new</span> <span class="n">IndexRequestBuilder</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">IndexRequest</span> <span class="nf">createIndexRequest</span><span class="o">(</span><span class="n">String</span> <span class="n">element</span><span class="o">,</span> <span class="n">RuntimeContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">json</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">,</span> <span class="n">element</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">Requests</span><span class="o">.</span><span class="na">indexRequest</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">index</span><span class="o">(</span><span class="s">&quot;my-index&quot;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">type</span><span class="o">(</span><span class="s">&quot;my-type&quot;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">source</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}));</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">input</span><span class="k">:</span> <span class="kt">DataStream</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">config</span> <span class="k">=</span> <span class="k">new</span> <span class="n">util</span><span class="o">.</span><span class="nc">HashMap</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">String</span><span class="o">]</span>
+<span class="n">config</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">&quot;bulk.flush.max.actions&quot;</span><span class="o">,</span> <span class="s">&quot;1&quot;</span><span class="o">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">&quot;cluster.name&quot;</span><span class="o">,</span> <span class="s">&quot;my-cluster-name&quot;</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">transports</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span>
+<span class="n">transports</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">InetSocketTransportAddress</span><span class="o">(</span><span class="s">&quot;node-1&quot;</span><span class="o">,</span> <span class="mi">9300</span><span class="o">))</span>
+<span class="n">transports</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">InetSocketTransportAddress</span><span class="o">(</span><span class="s">&quot;node-2&quot;</span><span class="o">,</span> <span class="mi">9300</span><span class="o">))</span>
+
+<span class="n">text</span><span class="o">.</span><span class="n">addSink</span><span class="o">(</span><span class="k">new</span> <span class="nc">ElasticsearchSink</span><span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="n">transports</span><span class="o">,</span> <span class="k">new</span> <span class="nc">IndexRequestBuilder</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">createIndexRequest</span><span class="o">(</span><span class="n">element</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">ctx</span><span class="k">:</span> <span class="kt">RuntimeContext</span><span class="o">)</span><span class="k">:</span> <span class="kt">IndexRequest</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">json</span> <span class="k">=</span> <span class="k">new</span> <span class="n">util</span><span class="o">.</span><span class="nc">HashMap</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">AnyRef</span><span class="o">]</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">,</span> <span class="n">element</span><span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;SENDING: &quot;</span> <span class="o">+</span> <span class="n">element</span><span class="o">)</span>
+    <span class="nc">Requests</span><span class="o">.</span><span class="n">indexRequest</span><span class="o">.</span><span class="n">index</span><span class="o">(</span><span class="s">&quot;my-index&quot;</span><span class="o">).</span><span class="n">`type`</span><span class="o">(</span><span class="s">&quot;my-type&quot;</span><span class="o">).</span><span class="n">source</span><span class="o">(</span><span class="n">json</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}))</span></code></pre></figure>
+
+  </div>
+</div>
+
+<p>这两种方式的不同之处在于，使用 <code>TransportClient</code> 方式连接集群，我们需要为 Sink 提供 Elasticsearch 集群的机器列表。</p>
+
+<p>更多 Elasticsearch 信息请参考 <a href="https://elastic.co">这里</a> 。</p>
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/streaming/connectors/elasticsearch.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

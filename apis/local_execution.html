@@ -1,0 +1,401 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: 本地执行</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+  
+  
+  <div class="col-md-8 col-md-offset-2 text">
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <h1>本地执行</h1>
+
+
+<p>Flink 不但可以单机运行，即使是单个 Java 虚拟机也可以。
+这使得用户可以在本地调试。
+本节主要讲述本地模式的运行机制。</p>
+
+<p>Flink 可以运行在本地 Java 虚拟机中，或者带 JVM 环境的程序中。
+对于大部分示例程序而言，你只需简单的地点击你IDE上的运行按钮就可以运行。</p>
+
+<p>Flink在本地模式下支持两种运行方式。</p>
+
+<ol>
+  <li><code>LocalExecutionEnvironment</code>  启动了完整的 Flink 运行环境，包括了一个 JobManager 和一个 TaskManager。还包含了内存管理和所有在集群模式下的内部算法。</li>
+  <li><code>CollectionEnvironment</code> 这个环境使用Java集合来执行Flink程序。这个模式不会启动一个完全的 Flink 运行环境，因此会开销非常低并且很轻量。例如 <code>DataSet.map()</code>-转换操作，执行机制将是对Java list里的所有元素进行<code>map()</code> 函数的操作。</li>
+</ol>
+
+<ul id="markdown-toc">
+  <li><a href="#调试" id="markdown-toc-调试">调试</a></li>
+  <li><a href="#maven-依赖" id="markdown-toc-maven-依赖">Maven 依赖</a></li>
+  <li><a href="#本地环境" id="markdown-toc-本地环境">本地环境</a></li>
+  <li><a href="#集合环境" id="markdown-toc-集合环境">集合环境</a></li>
+</ul>
+
+<h2 id="调试">调试</h2>
+
+<p>如果你本地运行Flink程序，你可以像普通的Java程序一样调试Flink程序。
+你既可以用<code>System.out.println()</code> 打印一些内部变量，也可以使用 IDE 提供的调试工具。
+你还可以在<code>map()</code>, <code>reduce()</code> 或者其他方法中打断点。
+请参见 <a href="/1.1.0/apis/batch/debugging">Batch 调试指南</a> 和 
+<a href="/1.1.0/apis/streaming/#debugging">Streaming 调试指南</a> 
+了解更多关于如何测试以及 API 中提供的本地调试工具。</p>
+
+<h2 id="maven-依赖">Maven 依赖</h2>
+
+<p>如果你使用Maven开发你的程序，你需要使用下面方式加入 <code>flink-clients</code> 模块的依赖:</p>
+
+<div class="highlight"><pre><code class="language-xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>flink-clients_2.10<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></div>
+
+<h2 id="本地环境">本地环境</h2>
+
+<p><code>LocalEnvironment</code> 是用来本地执行 Flink 程序的句柄。
+可以用它在本地的 JVM （standalone 或嵌入其他程序）里运行程序。</p>
+
+<p>本地环境通过调用方法<code>ExecutionEnvironment.createLocalEnvironment()</code>来获得。
+默认情况下，Flink 会根据你的CPU核数（硬件环境）来在本地开启同样多的线程。
+你可以指定你需要的并行度。
+本模式的日志可以通过<code>enableLogging()</code>/<code>disableLogging()</code>来设置是否向标准输出输出。</p>
+
+<p>在大多数情况下，更推荐使用<code>ExecutionEnvironment.getExecutionEnvironment()</code> 来获得 Flink 的运行环境。
+当程序是在本地（未使用命令行接口）启动时，该方法会返回<code>LocalEnvironment</code> ，
+当程序是通过命令行接口<a href="cli.html">命令行接口（CLI）</a>提交时，则该方法会返回集群的执行环境。</p>
+
+<div class="highlight"><pre><code class="language-java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">createLocalEnvironment</span><span class="o">();</span>
+
+    <span class="n">DataSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">readTextFile</span><span class="o">(</span><span class="s">&quot;file:///path/to/file&quot;</span><span class="o">);</span>
+
+    <span class="n">data</span>
+        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="k">new</span> <span class="n">FilterFunction</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">filter</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;http://&quot;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">})</span>
+        <span class="o">.</span><span class="na">writeAsText</span><span class="o">(</span><span class="s">&quot;file:///path/to/result&quot;</span><span class="o">);</span>
+
+    <span class="n">JobExecutionResult</span> <span class="n">res</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
+
+<p><code>JobExecutionResult</code> 对象在程序执行结束时会返回，这个类中包含了程序的运行环境和累加器的结果。</p>
+
+<p><code>LocalEnvironment</code> 类也可以向Flink传入一个用户自定义的配置选项。</p>
+
+<div class="highlight"><pre><code class="language-java"><span class="n">Configuration</span> <span class="n">conf</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Configuration</span><span class="o">();</span>
+<span class="n">conf</span><span class="o">.</span><span class="na">setFloat</span><span class="o">(</span><span class="n">ConfigConstants</span><span class="o">.</span><span class="na">TASK_MANAGER_MEMORY_FRACTION_KEY</span><span class="o">,</span> <span class="mf">0.5f</span><span class="o">);</span>
+<span class="kd">final</span> <span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">createLocalEnvironment</span><span class="o">(</span><span class="n">conf</span><span class="o">);</span></code></pre></div>
+
+<p><em>注意：</em>本地执行环境不会启动任何 web 前端来监控执行过程。</p>
+
+<h2 id="集合环境">集合环境</h2>
+
+<p>集合环境使用<code>CollectionEnvironment</code> 类，这个类执行Flink程序时使用了一些低开销的方法。
+这种模式通常用于自动化测试、调试、代码重用等场景。</p>
+
+<p>用户可以将实现于批处理的算法用于更具交互性的场景中，一个Flink程序稍加修改即可用于处理请求的Java应用服务器。</p>
+
+<p><strong>基于集合环境的执行框架</strong></p>
+
+<div class="highlight"><pre><code class="language-java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="c1">// initialize a new Collection-based execution environment</span>
+    <span class="kd">final</span> <span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CollectionEnvironment</span><span class="o">();</span>
+
+    <span class="n">DataSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span> <span class="cm">/* 从Java集合中获得元素 */</span><span class="o">);</span>
+
+    <span class="cm">/* 数据集转换 ... */</span>
+
+    <span class="c1">// 将转换后的 Tuple2 结果元素导入到 ArrayList 中。</span>
+    <span class="n">Collection</span><span class="o">&lt;...&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;...&gt;();</span>
+    <span class="n">resultDataSet</span><span class="o">.</span><span class="na">output</span><span class="o">(</span><span class="k">new</span> <span class="n">LocalCollectionOutputFormat</span><span class="o">&lt;...&gt;(</span><span class="n">result</span><span class="o">));</span>
+
+    <span class="c1">// 开始执行。</span>
+    <span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+
+    <span class="c1">// 对结果进行其它处理 ArrayList (=Collection).</span>
+    <span class="k">for</span><span class="o">(...</span> <span class="n">t</span> <span class="o">:</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Result = &quot;</span><span class="o">+</span><span class="n">t</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>在<code>flink-examples-batch</code> 模块中有完整的示例，叫 <code>CollectionExecutionExample</code> .</p>
+
+<p>值得注意的是，基于集合环境的 Flink 程序只适用于小数据， 不能超过 JVM 的堆内存大小
+集合模式只的执行器只使用了单线程，而非多线程。</p>
+
+     <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/local_execution.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+  </div>
+  
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

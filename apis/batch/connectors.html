@@ -1,0 +1,546 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: Connectors</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+
+      
+      <li class="active">Connectors</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>Connectors</h1>
+
+      <!-- Content -->
+      
+
+<ul id="markdown-toc">
+  <li><a href="#reading-from-file-systems" id="markdown-toc-reading-from-file-systems">Reading from file systems</a>    <ul>
+      <li><a href="#using-hadoop-file-system-implementations" id="markdown-toc-using-hadoop-file-system-implementations">Using Hadoop file system implementations</a></li>
+    </ul>
+  </li>
+  <li><a href="#connecting-to-other-systems-using-inputoutputformat-wrappers-for-hadoop" id="markdown-toc-connecting-to-other-systems-using-inputoutputformat-wrappers-for-hadoop">Connecting to other systems using Input/OutputFormat wrappers for Hadoop</a></li>
+  <li><a href="#avro-support-in-flink" id="markdown-toc-avro-support-in-flink">Avro support in Flink</a>    <ul>
+      <li><a href="#access-microsoft-azure-table-storage" id="markdown-toc-access-microsoft-azure-table-storage">Access Microsoft Azure Table Storage</a></li>
+    </ul>
+  </li>
+  <li><a href="#access-mongodb" id="markdown-toc-access-mongodb">Access MongoDB</a></li>
+</ul>
+
+<blockquote>
+  <p>注：本节未经校验，如有问题欢迎提issue</p>
+</blockquote>
+
+<h2 id="reading-from-file-systems">Reading from file systems</h2>
+
+<p>Flink 内建支持如下的文件系统:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Filesystem</th>
+      <th>Scheme</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Hadoop Distributed File System (HDFS)  </td>
+      <td><code>hdfs://</code></td>
+      <td>All HDFS versions are supported</td>
+    </tr>
+    <tr>
+      <td>Amazon S3</td>
+      <td><code>s3://</code></td>
+      <td>Support through Hadoop file system implementation (see below)</td>
+    </tr>
+    <tr>
+      <td>MapR file system</td>
+      <td><code>maprfs://</code></td>
+      <td>The user has to manually place the required jar files in the <code>lib/</code> dir</td>
+    </tr>
+    <tr>
+      <td>Tachyon</td>
+      <td><code>tachyon://</code>  </td>
+      <td>Support through Hadoop file system implementation (see below)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="using-hadoop-file-system-implementations">Using Hadoop file system implementations</h3>
+
+<p>flink 允许用户使用任何实现了<code>org.apache.hadoop.fs.FileSystem</code>接口的文件系统。</p>
+
+<ul>
+  <li><a href="https://aws.amazon.com/s3/">S3</a> (tested)</li>
+  <li><a href="https://cloud.google.com/hadoop/google-cloud-storage-connector">Google Cloud Storage Connector for Hadoop</a> (tested)</li>
+  <li><a href="http://tachyon-project.org/">Tachyon</a> (tested)</li>
+  <li><a href="http://www.xtreemfs.org/">XtreemFS</a> (tested)</li>
+  <li>FTP via <a href="http://hadoop.apache.org/docs/r1.2.1/hftp.html">Hftp</a> (not tested)</li>
+  <li>and many more.</li>
+</ul>
+
+<p>如果想要在flink中使用hadoop 文件系统， 请确定：</p>
+
+<ul>
+  <li><code>flink-conf.yaml</code> 设置<code>fs.hdfs.hadoopconf</code> 到正确的hadoop 配置文件目录。</li>
+  <li>hadoop 配置中必须有要求文件系统的入口点， 可以参考下面的s3和tachyon。</li>
+  <li>对应文件系统需要的class 必须已经安装在flink安装目录的<code>lib／</code>中， 并且是每台机器上。 如果不能放到这个目录下， 那必须设置<code>HADOOP_CLASSPATH</code>环境变量， flink会把这个目录下的jar加载到classpath中</li>
+</ul>
+
+<h4 id="amazon-s3">Amazon S3</h4>
+
+<p>For Amazon S3 support add the following entries into the <code>core-site.xml</code> file:</p>
+
+<div class="highlight"><pre><code class="language-xml"><span class="c">&lt;!-- configure the file system implementation --&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>fs.s3.impl<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>org.apache.hadoop.fs.s3native.NativeS3FileSystem<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+
+<span class="c">&lt;!-- set your AWS ID --&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>fs.s3.awsAccessKeyId<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>putKeyHere<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+
+<span class="c">&lt;!-- set your AWS access key --&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>fs.s3.awsSecretAccessKey<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>putSecretHere<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span></code></pre></div>
+
+<h4 id="tachyon">Tachyon</h4>
+
+<p>For Tachyon support add the following entry into the <code>core-site.xml</code> file:</p>
+
+<div class="highlight"><pre><code class="language-xml"><span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>fs.tachyon.impl<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>tachyon.hadoop.TFS<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span></code></pre></div>
+
+<h2 id="connecting-to-other-systems-using-inputoutputformat-wrappers-for-hadoop">Connecting to other systems using Input/OutputFormat wrappers for Hadoop</h2>
+
+<p>连接其他封装input/outputformat的文件系统。</p>
+
+<p>flink允许用户使用很多不同的系统作为source或sink。 为了让系统很容易扩展， 类似hadoop，flink也有<code>InputFormat</code>s 和 <code>OutputFormat</code>的概念</p>
+
+<p><code>HadoopInputFormat</code>就是实现了<code>InputFormat</code>。 允许用户使用现有hadoop 所有的input format。</p>
+
+<p><a href="/1.1.0/apis/batch/hadoop_compatibility.html">Read more about Hadoop compatibility in Flink</a> 会给出一些连接其他系统的example。</p>
+
+<h2 id="avro-support-in-flink">Avro support in Flink</h2>
+
+<p>flink 内建扩展支持<a href="http://avro.apache.org/">Apache Avro</a>。 这样很容易从avro文件中读取数据。 同样， 序列化框架可以处理从avro schema产生的class</p>
+
+<p>如果想要读取avro的文件， 用户必须设置<code>AvroInputFormat</code></p>
+
+<p><strong>Example</strong>:</p>
+
+<div class="highlight"><pre><code class="language-java"><span class="n">AvroInputFormat</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AvroInputFormat</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;(</span><span class="n">in</span><span class="o">,</span> <span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">usersDS</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">createInput</span><span class="o">(</span><span class="n">users</span><span class="o">);</span></code></pre></div>
+
+<p><code>User</code> 是一个由avro生成的pojo。 flink 可以在这些pojo上执行string基础的key选择， 比如：</p>
+
+<div class="highlight"><pre><code class="language-java"><span class="n">usersDS</span><span class="o">.</span><span class="na">groupBy</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">)</span></code></pre></div>
+
+<p><code>GenericData.Record</code> 可以在flink中使用，但不推荐。 因为record中包含所有的schema， 会有点慢。</p>
+
+<p>flink的pojo字段选择对avro生成的pojo同样有效。 但仅仅当字段类型被正确写入到生产的类中。 如果一个字段是某种类型object, 用户就不能用这个字段作为join或grouping的key。
+在avro中确定一个字段类似<code>{"name": "type_double_test", "type": "double"},</code>是ok的， 然后确定一个字段为union-type 但只有一个filed(<code>{"name": "type_double_test", "type": ["double"]},</code>)， 这样会生成一个类型<code>Object</code>字段。 注意， 确定nullable类型(<code>{"name": "type_double_test", "type": ["null", "double"]},</code>) 是可以的</p>
+
+<h3 id="access-microsoft-azure-table-storage">Access Microsoft Azure Table Storage</h3>
+
+<p><em>Note: This example works starting from Flink 0.6-incubating</em></p>
+
+<p>这个例子使用<code>HadoopInputFormat</code> 封装来使用一种现存的hadoop input format实现访问<a href="https://azure.microsoft.com/en-us/documentation/articles/storage-introduction/">Azure’s Table Storage</a>.</p>
+
+<ol>
+  <li>
+    <p>下载并编译<code>azure-tables-hadoop</code>工程。 这个项目开发的input format 目前在中央maven库中还不能被直接使用， 因此用户得自己编译项目。</p>
+
+    <div class="highlight"><pre><code class="language-bash">git clone https://github.com/mooso/azure-tables-hadoop.git
+<span class="nb">cd </span>azure-tables-hadoop
+mvn clean install</code></pre></div>
+  </li>
+  <li>
+    <p>用quickstart来快速创建一个flink项目：</p>
+
+    <div class="highlight"><pre><code class="language-bash">curl https://flink.apache.org/q/quickstart.sh <span class="p">|</span> bash</code></pre></div>
+  </li>
+  <li>
+    <p>在<code>pom.xml</code>中加入下面的依赖：</p>
+
+    <div class="highlight"><pre><code class="language-xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>flink-hadoop-compatibility_2.10<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.microsoft.hadoop<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>microsoft-hadoop-azure<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>0.0.4<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></div>
+
+    <p><code>flink-hadoop-compatibility</code> 是一个提供hadoop input format 封装的package。
+把<code>microsoft-hadoop-azure</code>加到项目中去。</p>
+  </li>
+</ol>
+
+<p>建议把项目import到ide中，比如eclipse或intellij。 查看代码<code>Job.java</code>， 它是一个flink job的空框架</p>
+
+<p>Paste the following code into it:</p>
+
+<div class="highlight"><pre><code class="language-java"><span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.api.common.functions.MapFunction</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.api.java.DataSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.api.java.ExecutionEnvironment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.api.java.tuple.Tuple2</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.hadoopcompatibility.mapreduce.HadoopInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.microsoft.hadoop.azure.AzureTableConfiguration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.microsoft.hadoop.azure.AzureTableInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.microsoft.hadoop.azure.WritableEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.microsoft.windowsazure.storage.table.EntityProperty</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AzureTableExample</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="c1">// set up the execution environment</span>
+    <span class="kd">final</span> <span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+    
+    <span class="c1">// create a  AzureTableInputFormat, using a Hadoop input format wrapper</span>
+    <span class="n">HadoopInputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">WritableEntity</span><span class="o">&gt;</span> <span class="n">hdIf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HadoopInputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">WritableEntity</span><span class="o">&gt;(</span><span class="k">new</span> <span class="nf">AzureTableInputFormat</span><span class="o">(),</span> <span class="n">Text</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">WritableEntity</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="k">new</span> <span class="nf">Job</span><span class="o">());</span>
+
+    <span class="c1">// set the Account URI, something like: https://apacheflink.table.core.windows.net</span>
+    <span class="n">hdIf</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="n">AzureTableConfiguration</span><span class="o">.</span><span class="na">Keys</span><span class="o">.</span><span class="na">ACCOUNT_URI</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="s">&quot;TODO&quot;</span><span class="o">);</span> 
+    <span class="c1">// set the secret storage key here</span>
+    <span class="n">hdIf</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="n">AzureTableConfiguration</span><span class="o">.</span><span class="na">Keys</span><span class="o">.</span><span class="na">STORAGE_KEY</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="s">&quot;TODO&quot;</span><span class="o">);</span>
+    <span class="c1">// set the table name here</span>
+    <span class="n">hdIf</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="n">AzureTableConfiguration</span><span class="o">.</span><span class="na">Keys</span><span class="o">.</span><span class="na">TABLE_NAME</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="s">&quot;TODO&quot;</span><span class="o">);</span>
+    
+    <span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">WritableEntity</span><span class="o">&gt;&gt;</span> <span class="n">input</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">createInput</span><span class="o">(</span><span class="n">hdIf</span><span class="o">);</span>
+    <span class="c1">// a little example how to use the data in a mapper.</span>
+    <span class="n">DataSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">fin</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="k">new</span> <span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span><span class="n">WritableEntity</span><span class="o">&gt;,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="n">String</span> <span class="nf">map</span><span class="o">(</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">WritableEntity</span><span class="o">&gt;</span> <span class="n">arg0</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;--------------------------------\nKey = &quot;</span><span class="o">+</span><span class="n">arg0</span><span class="o">.</span><span class="na">f0</span><span class="o">);</span>
+        <span class="n">WritableEntity</span> <span class="n">we</span> <span class="o">=</span> <span class="n">arg0</span><span class="o">.</span><span class="na">f1</span><span class="o">;</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">EntityProperty</span><span class="o">&gt;</span> <span class="n">prop</span> <span class="o">:</span> <span class="n">we</span><span class="o">.</span><span class="na">getProperties</span><span class="o">().</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;key=&quot;</span><span class="o">+</span><span class="n">prop</span><span class="o">.</span><span class="na">getKey</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; ; value (asString)=&quot;</span><span class="o">+</span><span class="n">prop</span><span class="o">.</span><span class="na">getValue</span><span class="o">().</span><span class="na">getValueAsString</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">arg0</span><span class="o">.</span><span class="na">f0</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">});</span>
+
+    <span class="c1">// emit result (this works only locally)</span>
+    <span class="n">fin</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+
+    <span class="c1">// execute program</span>
+    <span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="s">&quot;Azure Example&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>这个例子展示如何访问azure的table并把数据加载到<code>DataSet</code></p>
+
+<h2 id="access-mongodb">Access MongoDB</h2>
+
+<p>This <a href="https://github.com/okkam-it/flink-mongodb-test">GitHub repository documents how to use MongoDB with Apache Flink (starting from 0.7-incubating)</a>.</p>
+
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/batch/connectors.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

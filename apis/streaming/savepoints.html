@@ -1,0 +1,402 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: Savepoints</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+
+      
+      <li class="active">Savepoints</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>Savepoints</h1>
+
+      <!-- Content -->
+      
+
+<p>程序写在 <a href="index.html">Data Stream API</a>，它可以从一个 <strong>保存点（savepoint）</strong> 恢复执行。保存点（savepoint）允许更新用户的程序或者 Flink 集群，而不会丢失任何数据。当前页面包含了所有到触发、还原、处理保存点（savepoint）的步骤。如果想了解更多关于 Flink 处理中间状态和错误的细节，请参考 <a href="state_backends.html">State in Streaming Programs</a> 和 <a href="fault_tolerance.html">Fault Tolerance</a> 页面。</p>
+
+<ul id="markdown-toc">
+  <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+  <li><a href="#configuration" id="markdown-toc-configuration">Configuration</a>    <ul>
+      <li><a href="#jobmanager" id="markdown-toc-jobmanager">JobManager</a></li>
+      <li><a href="#file-system" id="markdown-toc-file-system">File system</a></li>
+    </ul>
+  </li>
+  <li><a href="#changes-to-your-program" id="markdown-toc-changes-to-your-program">Changes to your program</a></li>
+  <li><a href="#command-line-client" id="markdown-toc-command-line-client">Command-line client</a></li>
+  <li><a href="#current-limitations" id="markdown-toc-current-limitations">Current limitations</a></li>
+</ul>
+
+<h2 id="overview">Overview</h2>
+
+<p>保存点（savepoint）是<strong>手动触发的checkpoints</strong>，它会对程序做一个镜像，并更新它（snapshot）到后台存储。为此他们依靠定期检查点机制。在运行中，程序会定期在工作节点上做快照，并产生一些检查点。恢复时，恢复到最近完成的检查点（checkpoint），在新检查点完成时，可以安全的删除旧的检查点。</p>
+
+<p>保存点（savepoint）和定期检查点是十分相似的，不同点是当新检查点完成之后，他们是 <strong>用户触发</strong> 和 <strong>不自动过期</strong> 。</p>
+
+<p><img src="fig/savepoints-overview.png" class="center" /></p>
+
+<p>在以上的例子中，工作节点为任务 <em>0xA312Bc</em> 创建了以下检查点：<strong>c<sub>1</sub></strong>, <strong>c<sub>2</sub></strong>, <strong>c<sub>3</sub></strong>, and <strong>c<sub>4</sub></strong>。定期的检查点 <strong>c<sub>1</sub></strong> 和 <strong>c<sub>3</sub></strong> 已经被 <em>丢弃</em> ，检查点 <strong>c<sub>4</sub></strong> 是 <em>最新的检查点</em>。 <strong>c<sub>2</sub> 是一个特殊的检查点</strong>. 它和保存点（savepoint） <strong>s<sub>1</sub></strong> 存在一定关系，并且 <strong>c<sub>2</sub></strong> 是由用户触发并且它并不会自动过期(当新的检查点完成后， <strong>c<sub>1</sub></strong> 和 <strong>c<sub>3</sub></strong> 会去执行过期操作)。</p>
+
+<p>注意： <strong>s<sub>1</sub></strong> 只是指向 <strong>真实检查点c<sub>2</sub></strong>。 这意味着，保存点（savepoint）的实际状态是<em>不可复制</em>的，并且会保留定期检查点的数据。</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Savepoints 指向周期性的检查点，并按照 <a href="state_backends.html">state backend</a> 的配置保存位置信息。当前支撑的后台状态存储是<strong>jobmanager</strong> 和 <strong>filesystem</strong> 。定期检查点的后台状态存储的配置和保存点（savepoint）的后台状态存储的配置是 <strong>独立</strong>的。检查点数据并不是 savepoint 的 <strong>副本</strong> ，但是指向已配置的在后台存储上的存储点（checkpoint）。</p>
+
+<h3 id="jobmanager">JobManager</h3>
+
+<p>JobManager 是 savepoints 的 <strong>默认后台</strong>。</p>
+
+<p>Savepoints 保存在 job manager 的堆内存中。当 job manager 停止后， 保存点（Savepoints） 也会 <em>丢失</em>。这种模式下，在运行的 <strong>same cluster</strong> 上执行 <em>stop</em> 和 <em>resume</em> 才会生效。这种方式 <em>不推荐</em> 在生产环境使用。 保存点（Savepoints） 并 <em>不</em> 是 <a href="/1.1.0/setup/jobmanager_high_availability.html">job manager’s highly available</a> 状态的一部分。</p>
+
+<pre>
+savepoints.state.backend: jobmanager
+</pre>
+
+<p><strong>注意</strong>： 如果不配置 保存点（savepoints） 的后台状态存储，就会使用 jobmanager 作为后台状态存储。</p>
+
+<h3 id="file-system">File system</h3>
+
+<p>Savepoints 存储在配置项 <strong>file system directory</strong> 中。他们在集群实例中是可用的，并且允许移动程序到其他的集群。</p>
+
+<pre>
+savepoints.state.backend: filesystem
+savepoints.state.backend.fs.dir: hdfs:///flink/savepoints
+</pre>
+
+<p><strong>Note</strong>: 如果不单独指定目录，后台状态存储就会使用job manager。</p>
+
+<p><strong>重要</strong>: 一个 保存点（savepoint） 是一个指向已完成的检查点的指针。意味着，在 savepoint 自己的文件中找不到 savepoint 的状态，但是它（savepoint）需要真实的检查点数据 (e.g. in a set of further files)。毕竟，savepoints 配置了 <em>filesystem</em> 后台后， 检查点的 <em>jobmanager</em> 并不会工作。因为必需的检查点数据在 job manager 重启后不可用。</p>
+
+<h2 id="changes-to-your-program">Changes to your program</h2>
+
+<p>Savepoints 是<strong>out of the box</strong> 方式运行，但强烈建议用户微调程序，从而在未来的用户程序版本中，可以在 savepoint 下工作。</p>
+
+<p><img src="fig/savepoints-program_ids.png" class="center" /></p>
+
+<p>关于 savepoints <strong>only stateful tasks matter</strong>. 在上面的例子中，source 和 map tasks 是有状态的，但 sink是无状态的。毕竟，只有source 和 map tasks 的状态属于 savepoint 的一部分。</p>
+
+<p>每个任务都有自己的 <strong>自增id</strong> 和 <strong>子任务索引</strong>。在上面的例子中，source (<strong>s<sub>1</sub></strong>, <strong>s<sub>2</sub></strong>) 的状态和map tasks (<strong>m<sub>1</sub></strong>, <strong>m<sub>2</sub></strong>) 都以他们的 task id(<em>0xC322EC</em> for the source tasks and <em>0x27B3EF</em> for the map tasks)和 subtask index 进行标识，sinks (<strong>t<sub>1</sub></strong>, <strong>t<sub>2</sub></strong>)并没有状态，他们的id没有意义。</p>
+
+<p><span class="label label-danger">重点</span> 这些 ID 是从你的程序结构中以确定性的方式自动生成的。这意味着只要程序不修改，这些 id 也不会更改。 <strong>唯一可以改变的是用户函数中的内容，比如：用户可以修改 <code>MapFunction</code> 的实现，而不是修改 topology</strong>。 在这种情况下，直接从保存点（savepoint）恢复状态，通过将他们影射成相同的 task ids 和 subtask index。这允许用户开箱即用（out of the box）savepoint, 但只要用户改变了topology，就会导致问题，因为这样会导致id 发生变化，savepoint 里面的状态就不能影射到程序上了</p>
+
+<p><span class="label label-info">推荐配置</span> 为了能够修改程序和 <strong>拥有固定 IDs</strong>， <em>DataStream</em> 的api提供了接口,这些接口可以手动指定 task ID。每个操作都提供了 <strong><code>uid(String)</code></strong> 方法覆盖掉自动生成的 ID。ID 是 String 类型，它被哈希为一个16位哈希值。<strong>重要</strong> 的是：指定的 IDs 在<strong>每个transformation和job都是唯一的</strong>。如果不是这种情况，任务提交会失败。</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">DataStream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="k">=</span> <span class="n">env</span><span class="o">.</span>
+  <span class="c1">// Stateful source (e.g. Kafka) with ID</span>
+  <span class="o">.</span><span class="n">addSource</span><span class="o">(</span><span class="k">new</span> <span class="nc">StatefulSource</span><span class="o">())</span>
+  <span class="o">.</span><span class="n">uid</span><span class="o">(</span><span class="s">&quot;source-id&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">shuffle</span><span class="o">()</span>
+  <span class="c1">// The stateful mapper with ID</span>
+  <span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">new</span> <span class="nc">StatefulMapper</span><span class="o">())</span>
+  <span class="o">.</span><span class="n">uid</span><span class="o">(</span><span class="s">&quot;mapper-id&quot;</span><span class="o">)</span>
+
+<span class="c1">// Stateless sink (no specific ID required)</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">print</span><span class="o">()</span></code></pre></figure>
+
+<h2 id="command-line-client">Command-line client</h2>
+
+<p>你可以控制 savepoints 通过 <a href="/1.1.0/apis/cli.html#savepoints">command line client</a>.</p>
+
+<h2 id="current-limitations">Current limitations</h2>
+
+<p><strong>Parallelism</strong>: 恢复 savepoint 时，程序的并发必须和原来的 savepoint 已经完成的程序一致。savepoint 没有重分区的机制。</p>
+
+<p><strong>Chaining</strong>:  链接(chained)的操作由第一个task的 ID 来标示。不能为中间链接的task手动指定id，例如：在操作 <code>[  a -&gt; b -&gt; c ]</code> 中，只有 <strong>a</strong> 可以手动指定它的 ID, <strong>b</strong> 和 <strong>c</strong> 则不行。要解决这种情况可以参考 <a href="index.html#task-chaining-and-resource-groups">manually define the task chains</a>。如果依赖自动的 ID 分配，对链接操作的改变同样导致 IDs 的改变。</p>
+
+<p><strong>Disposing custom state handles</strong>: 处理旧的 savepoint 不能自定义状态句柄（如果启用了自定义状态后端），因为在处置过程中，用户的代码加载器不可用。</p>
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/streaming/savepoints.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

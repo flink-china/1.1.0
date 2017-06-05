@@ -1,0 +1,487 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: Apache Kafka Connector</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+
+      
+      
+      
+
+      
+
+      <li><a href="/1.1.0/apis/streaming/connectors/">Connectors</a></li>
+      
+      
+      <li class="active">Kafka</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>Apache Kafka Connector</h1>
+
+      <!-- Content -->
+      
+
+<p>该 connector 可以访问由 <a href="https://kafka.apache.org/">Apache Kafka</a> 提供的事件流。</p>
+
+<p>Flink 提供了专门的的 Kafka connector，用来从 Kafka topic 中读写数据。Flink Kafka Consumer 中整合了 Flink 的 checkpoint 机制，以提供只处理一次（exactly-once）的语义。为了实现这个功能，Flink 并不是简单地依赖 Kafka 的 offset 机制，而是在内部也会对相应的 offset 做状态存储和跟踪。</p>
+
+<p>请根据你的使用场景和环境来选择对应的包（maven artifact id）和类名。对于大多数用户来说，<code>FlinkKafkaConsumer08</code>（在 <code>flink-connector-kafka</code> 中）相对比较适用。</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left">Maven 依赖</th>
+      <th class="text-left">支持自</th>
+      <th class="text-left">Consumer 和 <br />
+      Producer 类名</th>
+      <th class="text-left">Kafka 版本</th>
+      <th class="text-left">注意</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td>flink-connector-kafka</td>
+        <td>0.9.1, 0.10</td>
+        <td>FlinkKafkaConsumer082<br />
+        FlinkKafkaProducer</td>
+        <td>0.8.x</td>
+        <td>内部使用 Kafka 的 <a href="https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+SimpleConsumer+Example">SimpleConsumer</a> API 。Flink 会存储相应的 offset 到 ZK 中。</td>
+    </tr>
+     <tr>
+        <td>flink-connector-kafka-0.8_2.10</td>
+        <td>1.0.0</td>
+        <td>FlinkKafkaConsumer08<br />
+        FlinkKafkaProducer08</td>
+        <td>0.8.x</td>
+        <td>内部使用 Kafka 的 <a href="https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+SimpleConsumer+Example">SimpleConsumer</a> API 。Flink 会存储相应的 offset 到 ZK 中。</td>
+    </tr>
+     <tr>
+        <td>flink-connector-kafka-0.9_2.10</td>
+        <td>1.0.0</td>
+        <td>FlinkKafkaConsumer09<br />
+        FlinkKafkaProducer09</td>
+        <td>0.9.x</td>
+        <td>使用新的 Kafka <a href="http://kafka.apache.org/documentation.html#newconsumerapi">Consumer API</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>然后，将 connector 导入到你的 maven 工程中：</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>flink-connector-kafka-0.8_2.10<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></figure>
+
+<p>注意 streaming connector 目前还不是二进制发布包中的一部分。请查阅 <a href="/1.1.0/apis/cluster_execution.html#linking-with-modules-not-contained-in-the-binary-distribution">这里</a> 了解如何在集群环境中关联它们。</p>
+
+<h4 id="安装-apache-kafka">安装 Apache Kafka</h4>
+
+<ul>
+  <li>按照 <a href="https://kafka.apache.org/documentation.html#quickstart">Kafka’s quickstart</a> 的指引下载并启动服务（在启动应用程序之前，必须先启动一个 Zookeeper 和 一个 Kafka 服务）。</li>
+  <li>在 32 位的机器上，<a href="http://stackoverflow.com/questions/22325364/unrecognized-vm-option-usecompressedoops-when-running-kafka-from-my-ubuntu-in">这个问题</a> 可能会发生。</li>
+  <li>如果 Kafka 和 Zookeeper 服务运行在远程机器上，那么 <code>config/server.properties</code> 中的 <code>advertised.host.name</code> 配置必须设置成机器的 IP 地址。</li>
+</ul>
+
+<h4 id="kafka-consumer">Kafka Consumer</h4>
+
+<p>Flink 的 Kafka consumer 称作 <code>FlinkKafkaConsumer08</code> (或 <code>09</code>)。它提供了访问一个或多个 Kafka topic 的功能。</p>
+
+<p>该类的构造器需要接受如下的参数：</p>
+
+<ol>
+  <li>topic 名 /  topic 列表</li>
+  <li>一个 <code>DeserializationSchema</code> / <code>KeyedDeserializationSchema</code> 用来反序列化从 Kafka 获得的数据。</li>
+  <li>Kafka consumer 的 <code>Properties</code>（属性）：
+  下面的属性是必须的：
+    <ul>
+      <li>“bootstrap.servers” (逗号分隔的 Kafka brokers 列表)</li>
+      <li>“zookeeper.connect” (逗号分隔的 Zookeeper servers 列表) (<strong>只有 Kafka 0.8 才需要</strong>)</li>
+      <li>“group.id” 消费组的 id</li>
+    </ul>
+  </li>
+</ol>
+
+<p>示例：</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Properties</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Properties</span><span class="o">();</span>
+<span class="n">properties</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;bootstrap.servers&quot;</span><span class="o">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="o">);</span>
+<span class="c1">// only required for Kafka 0.8</span>
+<span class="n">properties</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;zookeeper.connect&quot;</span><span class="o">,</span> <span class="s">&quot;localhost:2181&quot;</span><span class="o">);</span>
+<span class="n">properties</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;group.id&quot;</span><span class="o">,</span> <span class="s">&quot;test&quot;</span><span class="o">);</span>
+<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">env</span>
+	<span class="o">.</span><span class="na">addSource</span><span class="o">(</span><span class="k">new</span> <span class="n">FlinkKafkaConsumer08</span><span class="o">&lt;&gt;(</span><span class="s">&quot;topic&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nf">SimpleStringSchema</span><span class="o">(),</span> <span class="n">properties</span><span class="o">))</span>
+	<span class="o">.</span><span class="na">print</span><span class="o">();</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">properties</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Properties</span><span class="o">();</span>
+<span class="n">properties</span><span class="o">.</span><span class="n">setProperty</span><span class="o">(</span><span class="s">&quot;bootstrap.servers&quot;</span><span class="o">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="o">);</span>
+<span class="c1">// only required for Kafka 0.8</span>
+<span class="n">properties</span><span class="o">.</span><span class="n">setProperty</span><span class="o">(</span><span class="s">&quot;zookeeper.connect&quot;</span><span class="o">,</span> <span class="s">&quot;localhost:2181&quot;</span><span class="o">);</span>
+<span class="n">properties</span><span class="o">.</span><span class="n">setProperty</span><span class="o">(</span><span class="s">&quot;group.id&quot;</span><span class="o">,</span> <span class="s">&quot;test&quot;</span><span class="o">);</span>
+<span class="n">stream</span> <span class="k">=</span> <span class="n">env</span>
+    <span class="o">.</span><span class="n">addSource</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlinkKafkaConsumer08</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;topic&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nc">SimpleStringSchema</span><span class="o">(),</span> <span class="n">properties</span><span class="o">))</span>
+    <span class="o">.</span><span class="n">print</span></code></pre></figure>
+
+  </div>
+</div>
+
+<h5 id="deserializationschema"><code>DeserializationSchema</code></h5>
+
+<p><code>FlinkKafkaConsumer08</code> 需要知道如何将 Kafka 中的数据转成 Java 对象。<code>DeserializationSchema</code> 允许用户指定这样的一个 schema。Kafka 的每条消息都会调用 <code>T deserialize(byte[] message)</code> 方法，传入来自 Kafka 的值作为参数。要同时获得 Kafka 消息中的键和值，可以使用 <code>KeyedDeserializationSchema</code> 的反序列化方法 <code>T deserialize(byte[] messageKey, byte[] message, String topic, int partition, long offset)</code>。</p>
+
+<p>为了方便，Flink 提供了 <code>TypeInformationSerializationSchema</code> (和 <code>TypeInformationKeyValueSerializationSchema</code>) ，用来创建基于 Flink <code>TypeInformation</code> 的 schema。</p>
+
+<h4 id="kafka-consumer-和容错">Kafka Consumer 和容错</h4>
+
+<p>当 Flink 的 checkpoint 开启时，Flink Kafka Consumer 会从 topic 中消费记录，并以一致性的方式，周期性地 checkpoint 它的 Kafka offsets，以及其他操作中的状态。当作业失败了，Flink 会恢复流程序到最后一个 checkpoint 的状态，然后重新从保存在 checkpoint 中的 offset 处开始消费 Kafka 记录。</p>
+
+<p>因此在故障情况下，写 checkpoint 的间隔决定了程序最多可能需要回退多少。</p>
+
+<p>要使用 Kafka Consumers 的容错，需要在 execution environment 上打开拓扑的 checkpoint：</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">final</span> <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+<span class="n">env</span><span class="o">.</span><span class="na">enableCheckpointing</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span> <span class="c1">// checkpoint every 5000 msecs</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">StreamExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span><span class="o">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">enableCheckpointing</span><span class="o">(</span><span class="mi">5000</span><span class="o">)</span> <span class="c1">// checkpoint every 5000 msecs</span></code></pre></figure>
+
+  </div>
+</div>
+
+<p>另外注意 Flink 只有在还有足够的 slots 数的时候，才能够重启拓扑。所以如果是由于 TaskManager 挂了导致拓扑失败，那集群中必须仍有足够的 slots 才行。Flink on YARN 支持了对 YARN 容器的自动重启。</p>
+
+<p>如果没有开启 checkpoint，那么 Kafka consumer 会周期性地将 offset 写到 Zookeeper 中。</p>
+
+<h4 id="kafka-producer">Kafka Producer</h4>
+
+<p><code>FlinkKafkaProducer08</code> 能将数据写入到 Kafka topic 中。生产者可以指定一个自定义的 partitioner，以决定如何将数据写到对应的分区中。</p>
+
+<p>示例:</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">stream</span><span class="o">.</span><span class="na">addSink</span><span class="o">(</span><span class="k">new</span> <span class="n">FlinkKafkaProducer08</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;(</span><span class="s">&quot;localhost:9092&quot;</span><span class="o">,</span> <span class="s">&quot;my-topic&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nf">SimpleStringSchema</span><span class="o">()));</span></code></pre></figure>
+
+  </div>
+  <div data-lang="scala">
+
+    <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">stream</span><span class="o">.</span><span class="n">addSink</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlinkKafkaProducer08</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;localhost:9092&quot;</span><span class="o">,</span> <span class="s">&quot;my-topic&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nc">SimpleStringSchema</span><span class="o">()))</span></code></pre></figure>
+
+  </div>
+</div>
+
+<p>你可以使用这个构造器为 KafkaSink 定义一个自定义的 Kafka producer 配置。请查阅 <a href="https://kafka.apache.org/documentation.html">Apache Kafka 文档</a> 更详细地了解关于如何配置 Kafka Producers。</p>
+
+<p><strong>注意</strong>：默认情况下，重试次数被设为 “0”。也就是说生产者在发生错误后会立即失败，包括 leader 改变。默认设置为“0”，是为了避免目标 topic 中出现重复消息。对于大多数生产环境来说（一般都有频繁的 broker 切换），我们建议将重试次数的值调大。</p>
+
+<p>目前还没有事务性的 Kafka 生产者，所以 Flink 还不能保证以 exactly-once 的语义将消息投递到Kafka topic中。</p>
+
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/streaming/connectors/kafka.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

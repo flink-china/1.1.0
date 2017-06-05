@@ -1,0 +1,524 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: Hadoop Compatibility</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+
+      
+      <li class="active">Hadoop Compatibility</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>Hadoop Compatibility <span class="beta">(Beta)</span></h1>
+
+      <!-- Content -->
+      
+
+<blockquote>
+  <p>注：本节未经校验，如有问题欢迎提issue</p>
+</blockquote>
+
+<p>flink 兼容hadoop mapreduce的接口， 因此可以允许使用基于mapreduce的代码。</p>
+
+<p>You can:</p>
+
+<ul>
+  <li>use Hadoop’s <code>Writable</code> <a href="index.html#data-types">data types</a> in Flink programs.</li>
+  <li>use any Hadoop <code>InputFormat</code> as a <a href="index.html#data-sources">DataSource</a>.</li>
+  <li>use any Hadoop <code>OutputFormat</code> as a <a href="index.html#data-sinks">DataSink</a>.</li>
+  <li>use a Hadoop <code>Mapper</code> as <a href="dataset_transformations.html#flatmap">FlatMapFunction</a>.</li>
+  <li>use a Hadoop <code>Reducer</code> as <a href="dataset_transformations.html#groupreduce-on-grouped-dataset">GroupReduceFunction</a>.</li>
+</ul>
+
+<p>这篇文档展示如何在flink中使用现存的hadoop mapreduce 代码。 可以参考<a href="/1.1.0/apis/connectors.html">Connecting to other systems</a>
+来了解如何从hadoop支持的文件系统中读取数据。</p>
+
+<ul id="markdown-toc">
+  <li><a href="#project-configuration" id="markdown-toc-project-configuration">Project Configuration</a></li>
+  <li><a href="#using-hadoop-data-types" id="markdown-toc-using-hadoop-data-types">Using Hadoop Data Types</a></li>
+  <li><a href="#using-hadoop-inputformats" id="markdown-toc-using-hadoop-inputformats">Using Hadoop InputFormats</a></li>
+  <li><a href="#using-hadoop-outputformats" id="markdown-toc-using-hadoop-outputformats">Using Hadoop OutputFormats</a></li>
+  <li><a href="#using-hadoop-mappers-and-reducers" id="markdown-toc-using-hadoop-mappers-and-reducers">Using Hadoop Mappers and Reducers</a></li>
+  <li><a href="#complete-hadoop-wordcount-example" id="markdown-toc-complete-hadoop-wordcount-example">Complete Hadoop WordCount Example</a></li>
+</ul>
+
+<h3 id="project-configuration">Project Configuration</h3>
+
+<p>支持hadoop的input／output format仅仅是<code>flink-java</code> and<code>flink-scala</code>maven模块的部分。
+<code>mapred</code> and <code>mapreduce</code> api 代码在<code>org.apache.flink.api.java.hadoop</code> 和
+<code>org.apache.flink.api.scala.hadoop</code> 在一个额外的子package中</p>
+
+<p>支持hadoop mapreduce是在<code>flink-hadoop-compatibility</code> maven模块中。
+代码具体在<code>org.apache.flink.hadoopcompatibility</code> package中</p>
+
+<p>如果想要重复使用Mappers and Reducers， 得在maven中添加下面依赖</p>
+
+<div class="highlight"><pre><code class="language-xml"><span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>flink-hadoop-compatibility_2.10<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></div>
+
+<h3 id="using-hadoop-data-types">Using Hadoop Data Types</h3>
+
+<p>flink 支持所有的hadoop <code>Writable</code> and <code>WritableComparable</code> 数据类型。 不用额外添加hadoop Compatibility 依赖。
+可以参考<a href="index.html#data-types">Programming Guide</a> 了解如何使用hadoop data type</p>
+
+<h3 id="using-hadoop-inputformats">Using Hadoop InputFormats</h3>
+
+<p>通过<code>ExecutionEnvironment</code>的<code>readHadoopFile</code> or <code>createHadoopInput</code>， 
+用hadoop input format来创建data source。 前者用于format来自<code>FileInputFormat</code>
+后者用于普通的inpout format。</p>
+
+<p>创建的<code>DataSet</code>包含2-tuple， 第一个字段是key，第二个字段是从hadoop InputFormat获取的值。</p>
+
+<p>The following example shows how to use Hadoop’s <code>TextInputFormat</code>.</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">&gt;&gt;</span> <span class="n">input</span> <span class="o">=</span>
+    <span class="n">env</span><span class="o">.</span><span class="na">readHadoopFile</span><span class="o">(</span><span class="k">new</span> <span class="nf">TextInputFormat</span><span class="o">(),</span> <span class="n">LongWritable</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">Text</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">textPath</span><span class="o">);</span>
+
+<span class="c1">// Do something with the data.</span>
+<span class="o">[...]</span></code></pre></div>
+
+  </div>
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala"><span class="k">val</span> <span class="n">env</span> <span class="k">=</span> <span class="nc">ExecutionEnvironment</span><span class="o">.</span><span class="n">getExecutionEnvironment</span>
+
+<span class="k">val</span> <span class="n">input</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">LongWritable</span>, <span class="kt">Text</span><span class="o">)]</span> <span class="k">=</span>
+  <span class="n">env</span><span class="o">.</span><span class="n">readHadoopFile</span><span class="o">(</span><span class="k">new</span> <span class="nc">TextInputFormat</span><span class="o">,</span> <span class="n">classOf</span><span class="o">[</span><span class="kt">LongWritable</span><span class="o">],</span> <span class="n">classOf</span><span class="o">[</span><span class="kt">Text</span><span class="o">],</span> <span class="n">textPath</span><span class="o">)</span>
+
+<span class="c1">// Do something with the data.</span>
+<span class="o">[</span><span class="kt">...</span><span class="o">]</span></code></pre></div>
+
+  </div>
+
+</div>
+
+<h3 id="using-hadoop-outputformats">Using Hadoop OutputFormats</h3>
+
+<p>flink 提供兼容Hadoop <code>OutputFormats</code>的封装。 可以支持任何实现<code>org.apache.hadoop.mapred.OutputFormat</code>
+或继承<code>org.apache.hadoop.mapreduce.OutputFormat</code>的类。</p>
+
+<p>OutputFormat 封装需要输入的DataSet 是一个key／value的 2-tuple格式。 它们会由Hadoop OutputFormat 进行处理。</p>
+
+<p>The following example shows how to use Hadoop’s <code>TextOutputFormat</code>.</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <div class="highlight"><pre><code class="language-java"><span class="c1">// Obtain the result we want to emit</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">IntWritable</span><span class="o">&gt;&gt;</span> <span class="n">hadoopResult</span> <span class="o">=</span> <span class="o">[...]</span>
+
+<span class="c1">// Set up the Hadoop TextOutputFormat.</span>
+<span class="n">HadoopOutputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">IntWritable</span><span class="o">&gt;</span> <span class="n">hadoopOF</span> <span class="o">=</span>
+  <span class="c1">// create the Flink wrapper.</span>
+  <span class="k">new</span> <span class="n">HadoopOutputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">IntWritable</span><span class="o">&gt;(</span>
+    <span class="c1">// set the Hadoop OutputFormat and specify the job.</span>
+    <span class="k">new</span> <span class="n">TextOutputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">IntWritable</span><span class="o">&gt;(),</span> <span class="n">job</span>
+  <span class="o">);</span>
+<span class="n">hadoopOF</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="s">&quot;mapreduce.output.textoutputformat.separator&quot;</span><span class="o">,</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+<span class="n">TextOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nf">Path</span><span class="o">(</span><span class="n">outputPath</span><span class="o">));</span>
+
+<span class="c1">// Emit data using the Hadoop TextOutputFormat.</span>
+<span class="n">hadoopResult</span><span class="o">.</span><span class="na">output</span><span class="o">(</span><span class="n">hadoopOF</span><span class="o">);</span></code></pre></div>
+
+  </div>
+  <div data-lang="scala">
+
+    <div class="highlight"><pre><code class="language-scala"><span class="c1">// Obtain your result to emit.</span>
+<span class="k">val</span> <span class="n">hadoopResult</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[(</span><span class="kt">Text</span>, <span class="kt">IntWritable</span><span class="o">)]</span> <span class="k">=</span> <span class="o">[</span><span class="kt">...</span><span class="o">]</span>
+
+<span class="k">val</span> <span class="n">hadoopOF</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">HadoopOutputFormat</span><span class="o">[</span><span class="kt">Text</span>,<span class="kt">IntWritable</span><span class="o">](</span>
+  <span class="k">new</span> <span class="nc">TextOutputFormat</span><span class="o">[</span><span class="kt">Text</span>, <span class="kt">IntWritable</span><span class="o">],</span>
+  <span class="k">new</span> <span class="nc">JobConf</span><span class="o">)</span>
+
+<span class="n">hadoopOF</span><span class="o">.</span><span class="n">getJobConf</span><span class="o">.</span><span class="n">set</span><span class="o">(</span><span class="s">&quot;mapred.textoutputformat.separator&quot;</span><span class="o">,</span> <span class="s">&quot; &quot;</span><span class="o">)</span>
+<span class="nc">FileOutputFormat</span><span class="o">.</span><span class="n">setOutputPath</span><span class="o">(</span><span class="n">hadoopOF</span><span class="o">.</span><span class="n">getJobConf</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">resultPath</span><span class="o">))</span>
+
+<span class="n">hadoopResult</span><span class="o">.</span><span class="n">output</span><span class="o">(</span><span class="n">hadoopOF</span><span class="o">)</span></code></pre></div>
+
+  </div>
+
+</div>
+
+<h3 id="using-hadoop-mappers-and-reducers">Using Hadoop Mappers and Reducers</h3>
+
+<p>Hadoop Mappers 语法上等价于flink的<a href="dataset_transformations.html#flatmap">FlatMapFunctions</a> ， 
+Hadoop Reducers 语法上等价于flink的<a href="dataset_transformations.html#groupreduce-on-grouped-dataset">GroupReduceFunctions</a>。
+flink 同样封装了hadoop mapreduce的<code>Mapper</code> and <code>Reducer</code>接口的实现。 用户可以在普通flink程序中再次使用hadoop的Mappers and Reducers。 
+但仅仅<code>org.apache.hadoop.mapred</code>的Mapper and Reducer接口被支持</p>
+
+<p>封装函数用<code>DataSet&lt;Tuple2&lt;KEYIN,VALUEIN&gt;&gt;</code>作为输入， 产生<code>DataSet&lt;Tuple2&lt;KEYOUT,VALUEOUT&gt;&gt;</code> 作为输出， <code>KEYIN</code> and <code>KEYOUT</code>是key ， 
+<code>VALUEIN</code> and <code>VALUEOUT</code> 是values， 他们是hadoop函数处理的key／value对。 对于Reducers， flink 用<code>HadoopReduceCombineFunction</code> 封装GroupReduceFunction，
+但没有Combiner (<code>HadoopReduceFunction</code>)。 封装函数接收可选的<code>JobConf</code> 来配置hadoop的Mapper or Reducer。</p>
+
+<p>Flink’s function wrappers are</p>
+
+<ul>
+  <li><code>org.apache.flink.hadoopcompatibility.mapred.HadoopMapFunction</code>,</li>
+  <li><code>org.apache.flink.hadoopcompatibility.mapred.HadoopReduceFunction</code>, and</li>
+  <li><code>org.apache.flink.hadoopcompatibility.mapred.HadoopReduceCombineFunction</code>.</li>
+</ul>
+
+<p>他们可以被用于<a href="dataset_transformations.html#flatmap">FlatMapFunctions</a> or <a href="dataset_transformations.html#groupreduce-on-grouped-dataset">GroupReduceFunctions</a>.</p>
+
+<p>The following example shows how to use Hadoop <code>Mapper</code> and <code>Reducer</code> functions.</p>
+
+<div class="highlight"><pre><code class="language-java"><span class="c1">// Obtain data to process somehow.</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="o">[...]</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">text</span>
+  <span class="c1">// use Hadoop Mapper (Tokenizer) as MapFunction</span>
+  <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">new</span> <span class="n">HadoopMapFunction</span><span class="o">&lt;</span><span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">&gt;(</span>
+    <span class="k">new</span> <span class="nf">Tokenizer</span><span class="o">()</span>
+  <span class="o">))</span>
+  <span class="o">.</span><span class="na">groupBy</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+  <span class="c1">// use Hadoop Reducer (Counter) as Reduce- and CombineFunction</span>
+  <span class="o">.</span><span class="na">reduceGroup</span><span class="o">(</span><span class="k">new</span> <span class="n">HadoopReduceCombineFunction</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">&gt;(</span>
+    <span class="k">new</span> <span class="nf">Counter</span><span class="o">(),</span> <span class="k">new</span> <span class="nf">Counter</span><span class="o">()</span>
+  <span class="o">));</span></code></pre></div>
+
+<p><strong>Please note:</strong> Reducer封装处理由<a href="dataset_transformations.html#transformations-on-grouped-dataset">groupBy()</a> 定义的groups。
+它并不考虑任何在<code>JobConf</code>定义的自定义的分区器(partitioners), sort 或 grouping comparator。</p>
+
+<h3 id="complete-hadoop-wordcount-example">Complete Hadoop WordCount Example</h3>
+
+<p>下面给出一个完整的使用hadoop 数据类型， InputFormat/OutputFormat/Mapper/Redueer 的example。</p>
+
+<div class="highlight"><pre><code class="language-java"><span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+<span class="c1">// Set up the Hadoop TextInputFormat.</span>
+<span class="n">Job</span> <span class="n">job</span> <span class="o">=</span> <span class="n">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+<span class="n">HadoopInputFormat</span><span class="o">&lt;</span><span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">&gt;</span> <span class="n">hadoopIF</span> <span class="o">=</span>
+  <span class="k">new</span> <span class="n">HadoopInputFormat</span><span class="o">&lt;</span><span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">&gt;(</span>
+    <span class="k">new</span> <span class="nf">TextInputFormat</span><span class="o">(),</span> <span class="n">LongWritable</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">Text</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">job</span>
+  <span class="o">);</span>
+<span class="n">TextInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nf">Path</span><span class="o">(</span><span class="n">inputPath</span><span class="o">));</span>
+
+<span class="c1">// Read data using the Hadoop TextInputFormat.</span>
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">createInput</span><span class="o">(</span><span class="n">hadoopIF</span><span class="o">);</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">text</span>
+  <span class="c1">// use Hadoop Mapper (Tokenizer) as MapFunction</span>
+  <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">new</span> <span class="n">HadoopMapFunction</span><span class="o">&lt;</span><span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">&gt;(</span>
+    <span class="k">new</span> <span class="nf">Tokenizer</span><span class="o">()</span>
+  <span class="o">))</span>
+  <span class="o">.</span><span class="na">groupBy</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+  <span class="c1">// use Hadoop Reducer (Counter) as Reduce- and CombineFunction</span>
+  <span class="o">.</span><span class="na">reduceGroup</span><span class="o">(</span><span class="k">new</span> <span class="n">HadoopReduceCombineFunction</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">,</span> <span class="n">Text</span><span class="o">,</span> <span class="n">LongWritable</span><span class="o">&gt;(</span>
+    <span class="k">new</span> <span class="nf">Counter</span><span class="o">(),</span> <span class="k">new</span> <span class="nf">Counter</span><span class="o">()</span>
+  <span class="o">));</span>
+
+<span class="c1">// Set up the Hadoop TextOutputFormat.</span>
+<span class="n">HadoopOutputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">IntWritable</span><span class="o">&gt;</span> <span class="n">hadoopOF</span> <span class="o">=</span>
+  <span class="k">new</span> <span class="n">HadoopOutputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">IntWritable</span><span class="o">&gt;(</span>
+    <span class="k">new</span> <span class="n">TextOutputFormat</span><span class="o">&lt;</span><span class="n">Text</span><span class="o">,</span> <span class="n">IntWritable</span><span class="o">&gt;(),</span> <span class="n">job</span>
+  <span class="o">);</span>
+<span class="n">hadoopOF</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="s">&quot;mapreduce.output.textoutputformat.separator&quot;</span><span class="o">,</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+<span class="n">TextOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nf">Path</span><span class="o">(</span><span class="n">outputPath</span><span class="o">));</span>
+
+<span class="c1">// Emit data using the Hadoop TextOutputFormat.</span>
+<span class="n">result</span><span class="o">.</span><span class="na">output</span><span class="o">(</span><span class="n">hadoopOF</span><span class="o">);</span>
+
+<span class="c1">// Execute Program</span>
+<span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="s">&quot;Hadoop WordCount&quot;</span><span class="o">);</span></code></pre></div>
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/batch/hadoop_compatibility.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

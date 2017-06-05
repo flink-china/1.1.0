@@ -1,0 +1,533 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1.0 中文文档: 命令行接口（CLI）</title>
+    <link rel="shortcut icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/1.1.0/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/1.1.0/page/css/flink.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/syntax.css">
+    <link rel="stylesheet" href="/1.1.0/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+    <div style="position:fixed; bottom:0; left:0; z-index:99999; width:100%; text-align:center; padding:15px; border-top:1px dashed #CE4B65; background:#f6f0e3; font-weight:bold">
+       本文档适用于 Apache Flink 的旧版本，建议使用 <a href="http://doc.flink-china.org/latest/">最新版本的文档</a> 。
+    </div>
+    
+    
+
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink-china.org"><img alt="Apache Flink" src="/1.1.0/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/1.1.0/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/1.1.0/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/1.1.0/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/run_example_quickstart.html">例子: 维基百科编辑流</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/1.1.0/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/1.1.0/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/setup/building.html">构建 Flink</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/1.1.0/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/1.1.0/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/1.1.0/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/1.1.0/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/1.1.0/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/batch/"><strong>Batch 指南</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class="active"><a href="/1.1.0/apis/cli.html">命令行接口（CLI）</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/local_execution.html">本地执行</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/java8.html">Java 8</a></li>
+                
+                <li class=""><a href="/1.1.0/apis/metrics.html">Metrics</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/1.1.0/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/1.1.0/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/1.1.0/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/1.1.0/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/stream_checkpointing.html">Data Streaming的容错机制</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/1.1.0/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/1.1.0/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/1.1.0/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+  
+  
+  <div class="col-md-8 col-md-offset-2 text">
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <h1>命令行接口（CLI）</h1>
+
+
+<p>Flink提供了一个命令行接口（CLI）用来运行打成JAR包的程序，并且可以控制程序的执行。
+命令行接口可以用于本地单节点或是分布式的部署安装，它是Flink安装工具的一个组件。
+这个工具位于 <code>&lt;flink-home&gt;/bin/flink</code>，
+默认会连接运行中的 Flink master（JobManager），
+master 的启动脚本与 CLI 在同一安装目录下。</p>
+
+<p>因此使用命令行接口（CLI）的先决条件是启动一个master (JobManager)
+ (通过命令： 
+<code>&lt;flink-home&gt;/bin/start-local.sh</code> 或
+<code>&lt;flink-home&gt;/bin/start-cluster.sh</code>) 或是在 Flink YARN 环境中。</p>
+
+<p>命令行可以被用于</p>
+
+<ul id="markdown-toc">
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#savepoints" id="markdown-toc-savepoints">Savepoints</a></li>
+    </ul>
+  </li>
+  <li><a href="#用法" id="markdown-toc-用法">用法</a></li>
+</ul>
+
+<h2 id="示例">示例</h2>
+
+<ul>
+  <li>
+    <p>运行示例程序，不传参数：</p>
+
+    <div class="highlight"><pre><code>./bin/flink run ./examples/batch/WordCount.jar
+</code></pre></div>
+  </li>
+  <li>
+    <p>运行示例程序，带输入输出文件参数：</p>
+
+    <div class="highlight"><pre><code>./bin/flink run ./examples/batch/WordCount.jar \
+                       file:///home/user/hamlet.txt file:///home/user/wordcount_out
+</code></pre></div>
+  </li>
+  <li>
+    <p>运行示例程序，设置16个并发度，并且带输入输出文件参数：</p>
+
+    <div class="highlight"><pre><code>./bin/flink run -p 16 ./examples/batch/WordCount.jar \
+                        file:///home/user/hamlet.txt file:///home/user/wordcount_out
+</code></pre></div>
+  </li>
+  <li>
+    <p>运行示例程序，并禁止 Flink 在标准输出输出日志</p>
+
+    <div class="highlight"><pre><code>    ./bin/flink run -q ./examples/batch/WordCount.jar
+</code></pre></div>
+  </li>
+  <li>
+    <p>以独立（detached）模式运行示例程序：</p>
+
+    <div class="highlight"><pre><code>    ./bin/flink run -d ./examples/batch/WordCount.jar
+</code></pre></div>
+  </li>
+  <li>
+    <p>运行示例程序，指定 JobManager：</p>
+
+    <div class="highlight"><pre><code>./bin/flink run -m myJMHost:6123 \
+                       ./examples/batch/WordCount.jar \
+                       file:///home/user/hamlet.txt file:///home/user/wordcount_out
+</code></pre></div>
+  </li>
+  <li>
+    <p>运行示例程序，指定程序入口类的 class：</p>
+
+    <div class="highlight"><pre><code>./bin/flink run -c org.apache.flink.examples.java.wordcount.WordCount \
+                       ./examples/batch/WordCount.jar \
+                       file:///home/user/hamlet.txt file:///home/user/wordcount_out
+</code></pre></div>
+  </li>
+  <li>
+    <p>运行示例程序，使用 <a href="/1.1.0/setup/yarn_setup.html#run-a-single-flink-job-on-hadoop-yarn">per-job YARN 集群</a> 启动 2 个TaskManager：</p>
+
+    <div class="highlight"><pre><code>./bin/flink run -m yarn-cluster -yn 2 \
+                       ./examples/batch/WordCount.jar \
+                       hdfs:///user/hamlet.txt hdfs:///user/wordcount_out
+</code></pre></div>
+  </li>
+  <li>
+    <p>对于WordCount示例程序，以JSON的格式输出优化后的执行计划：</p>
+
+    <div class="highlight"><pre><code>./bin/flink info ./examples/batch/WordCount.jar \
+                        file:///home/user/hamlet.txt file:///home/user/wordcount_out
+</code></pre></div>
+  </li>
+  <li>
+    <p>列出已经调度的和正在运行的job（包含JobID信息）：</p>
+
+    <div class="highlight"><pre><code>./bin/flink list
+</code></pre></div>
+  </li>
+  <li>
+    <p>列出已经调度的job（包含JobID信息）：</p>
+
+    <div class="highlight"><pre><code>./bin/flink list -s
+</code></pre></div>
+  </li>
+  <li>
+    <p>列出正在运行的job（包含JobID信息）：</p>
+
+    <div class="highlight"><pre><code>./bin/flink list -r
+</code></pre></div>
+  </li>
+  <li>
+    <p>取消一个job：</p>
+
+    <div class="highlight"><pre><code>./bin/flink cancel &lt;jobID&gt;
+</code></pre></div>
+  </li>
+  <li>
+    <p>停止一个job(只适用于流式计算的job)：</p>
+
+    <div class="highlight"><pre><code>./bin/flink stop &lt;jobID&gt;
+</code></pre></div>
+  </li>
+</ul>
+
+<h3 id="savepoints">Savepoints</h3>
+
+<p><a href="/1.1.0/apis/streaming/savepoints.html">Savepoints</a> 通过命令行客户端来控制。</p>
+
+<h4 id="触发一个-savepoint"><strong>触发一个 savepoint</strong>:</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">./bin/flink savepoint &lt;jobID&gt;</code></pre></figure>
+
+<p>返回一个已经创建的savepoint的路径。你需要通过这个路径来恢复或销毁savepoints。</p>
+
+<h4 id="恢复一个-savepoint"><strong>恢复一个 savepoint</strong>:</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">./bin/flink run -s &lt;savepointPath&gt; ...</code></pre></figure>
+
+<p>这个 run 命令提交 job 时带有一个 savepoint 标记，这使得程序可以从 savepoint 保存的状态中恢复。
+savepoint路径是通过savepoint触发命令得到的。</p>
+
+<h4 id="销毁一个-savepoint"><strong>销毁一个 savepoint</strong>:</h4>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">./bin/flink savepoint -d &lt;savepointPath&gt;</code></pre></figure>
+
+<p>销毁一个savepoint同样需要一个路径。
+这个savepoint路径是通过savepoint触发命令得到的。</p>
+
+<h2 id="用法">用法</h2>
+
+<p>命令行的语法如下:</p>
+
+<div class="highlight"><pre><code>./flink &lt;ACTION&gt; [OPTIONS] [ARGUMENTS]
+
+下面列举一些可用的actions:
+
+指令 "run" 编译并且运行一个程序.
+
+  语法: run [OPTIONS] &lt;jar-file&gt; &lt;arguments&gt;
+  "run" action 选项:
+     -c,--class &lt;classname&gt;               程序的入口类("main" 方法或 "getPlan()" 方法。）
+                                          只有当 JAR 文件没有在 mainifest 中指定入口类时才需要。
+     -C,--classpath &lt;url&gt;                 在集群中的每个节点上为每个用户代码类加载器添加一个 URL 资源。
+                                          下会影响所有节点. 路径必须带上协议信息
+                                           (如 file://) 并且所有结点都可以访问
+                                           (例如NFS共享文件)。 你可以多次使用这个选项
+                                           来添加多个资源. 协议必须被{@link
+                                          java.net.URLClassLoader}支持。
+     -d,--detached                        如果加上这个选项，将在独立模式运行。
+     -m,--jobmanager &lt;host:port&gt;          连接JobManager (master) 的地址。可以指定
+                                          'yarn-cluster' 作为JobManager向YARN集群提
+                                          交job. 使用这个选项用来连接不同的JobManager
+                                          以替换配置中指定的JobManager。
+     -p,--parallelism &lt;parallelism&gt;       程序运行的并行度. 这个选项可以替换配置中指
+                                          定的并行度。
+     -q,--sysoutLogging                   加上这个选项则不会向标准输出输出日志。
+     -s,--fromSavepoint &lt;savepointPath&gt;   用来恢复一个savepoint(示例：
+                                          file:///flink/savepoint-1537).
+  如果设置了 -m yarn-cluster，可以额外使用以下参数：
+     -yD &lt;arg&gt;                            动态配置
+     -yd,--yarndetached                   以独立（detached）模式运行
+     -yj,--yarnjar &lt;arg&gt;                  Flink jar文件的路径
+     -yjm,--yarnjobManagerMemory &lt;arg&gt;    JobManager 容器的内存大小 [单位 MB]
+     -yn,--yarncontainer &lt;arg&gt;            YARN 容器分配的数量
+                                          (=Task Managers的数量)
+     -ynm,--yarnname &lt;arg&gt;                在YARN中设置自定义的应用程序名
+     -yq,--yarnquery                      列出可用的YARN资源
+                                          (内存, 核数)
+     -yqu,--yarnqueue &lt;arg&gt;               设置YARN的列队.
+     -ys,--yarnslots &lt;arg&gt;                每个TaskManager的slot数量
+     -yst,--yarnstreaming                 以流模式启动 Flink
+     -yt,--yarnship &lt;arg&gt;                 用来传输文件的目录（t 表示 transfer）
+     -ytm,--yarntaskManagerMemory &lt;arg&gt;   TaskManager 容器的内存大小 [单位 MB]
+
+
+指令 "info" 用来显示优化后的程序执行计划 (JSON).
+
+  语法: info [OPTIONS] &lt;jar-file&gt; &lt;arguments&gt;
+  "info" action 选项:
+     -c,--class &lt;classname&gt;           程序的入口类("main" 方法或 "getPlan()" 方法。）
+                                      只有当 JAR 文件没有在 mainifest 中指定入口类时才需要。
+     -m,--jobmanager &lt;host:port&gt;      连接JobManager (master) 的地址。可以指定
+                                      'yarn-cluster' 作为JobManager向YARN集群
+                                      提交job. 使用这个选项用来连接不同的JobManager
+                                      以替换配置中指定的JobManager。
+     -p,--parallelism &lt;parallelism&gt;   程序运行的并行度. 这个选项可以替换配置中指
+                                      定的并行度。
+
+
+指令 "list" 列举出运行中或者是已经调度的程序.
+
+  语法: list [OPTIONS]
+  "list" action 选项:
+     -m,--jobmanager &lt;host:port&gt;   连接JobManager (master) 的地址。可以指定
+                                   'yarn-cluster' 作为JobManager向YARN集群
+                                   提交job. 使用这个选项用来连接不同的JobManager
+                                   以替换配置中指定的JobManager。
+     -r,--running                  只显示运行中的程序和他们的JobID。
+     -s,--scheduled                只显示已调度过的程序和他们的JobID。
+
+
+指令 "cancel" 取消一个运行中的程序.
+
+  语法: cancel [OPTIONS] &lt;Job ID&gt;
+  "cancel" action 选项:
+     -m,--jobmanager &lt;host:port&gt;   连接JobManager (master) 的地址。可以指定
+                                   'yarn-cluster' 作为JobManager向YARN集群
+                                   提交job. 使用这个选项用来连接不同的JobManager
+                                   以替换配置中指定的JobManager。
+
+
+指令 "stop" 停止一个运行中的程序 (只能用于streaming jobs). 对于停止一个任务，并没有强一致性的保证。
+
+  语法: stop [OPTIONS] &lt;Job ID&gt;
+  "stop" action 选项:
+     -m,--jobmanager &lt;host:port&gt;   连接JobManager (master) 的地址。可以指定
+                                   'yarn-cluster' 作为JobManager向YARN集群
+                                   提交job. 使用这个选项用来连接不同的JobManager
+                                   以替换配置中指定的JobManager。
+
+
+指令 "savepoint" 对一个运行中的job触发savepoint或是销毁一个savepoint。
+
+  语法: savepoint [OPTIONS] &lt;Job ID&gt;
+  "savepoint" action 选项:
+     -d,--dispose &lt;savepointPath&gt;   销毁一个现存的 savepoint。
+     -m,--jobmanager &lt;host:port&gt;    连接JobManager (master) 的地址。可以指定
+                                    'yarn-cluster' 作为JobManager向YARN集群
+                                    提交job. 使用这个选项用来连接不同的JobManager
+                                    以替换配置中指定的JobManager。
+</code></pre></div>
+
+     <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/flink-china/flink-china-doc/edit/1.1.0/apis/cli.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+  </div>
+  
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/1.1.0/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>
